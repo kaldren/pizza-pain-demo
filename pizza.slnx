@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/pizza.api/pizza.api.csproj" />
+    <Project Path="src/pizza.web/pizza.web.csproj" />
+  </Folder>
+</Solution>
