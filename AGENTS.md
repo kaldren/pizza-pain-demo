@@ -9,7 +9,12 @@ Read every file fresh each session with the Read tool, in the order given. Do no
 ## 1. Shared Foundation — ALL agents, in this order
 1. [constitution.md](./context/core/constitution.md) — Supreme law of the project. Overrides everything else.
 2. [dependencies.md](./context/core/dependencies.md) — Approved dependencies and the dependency policy.
-3. [system_architecture.md](./context/core/system_architecture.md) — How the system layers fit together.
+3. [specs.md](./context/core/specs.md) — Spec-driven process and the **spec gate** every implementation agent must enforce.
+4. [system_architecture.md](./context/core/system_architecture.md) — How the system layers fit together.
+
+> **Spec gate:** implementation agents must not write code without an approved spec in
+> [context/specs/](./context/specs/). If no spec name is provided, ask for one; never proceed
+> silently. See [specs.md](./context/core/specs.md) for the exact behavior.
 
 ## 2. Domain Context — appended by the relevant agent
 After the shared foundation, each agent reads the docs for its domain:

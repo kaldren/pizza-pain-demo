@@ -15,6 +15,9 @@ document, guideline, or instruction conflicts with this file, **this file wins**
    explicitly amends this file first.
 
 ## 2. Core Principles
+- **Spec-first, always.** No feature is implemented without an approved spec in
+  [context/specs/](../specs/). The spec is human-authored and approved *before* any code is
+  written. See [specs.md](./specs.md) for the process. Agents must refuse to implement without one.
 - **Vertical slices first.** Features are self-contained modules; avoid cross-feature coupling.
 - **Tests are mandatory.** No feature is "done" without tests per [tests.md](./tests.md).
 - **Dependency discipline.** Use only approved dependencies in [dependencies.md](./dependencies.md);
@@ -23,6 +26,7 @@ document, guideline, or instruction conflicts with this file, **this file wins**
 - **Security & data protection.** <!-- TODO: state your auth, secrets, and data-handling rules -->
 
 ## 3. Definition of Done
+- [ ] Implements an approved spec from [context/specs/](../specs/)
 - [ ] Follows the architecture in [system_architecture.md](./system_architecture.md)
 - [ ] Uses only approved dependencies
 - [ ] If backend, follows the rules in [backend.md](./backend.md)

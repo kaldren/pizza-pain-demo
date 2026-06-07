@@ -12,13 +12,28 @@ Before writing a single line of code or making any decision, you MUST read the f
 **Shared foundation (all agents):**
 1. `context/core/constitution.md` — Supreme law of this project. All other rules defer to this.
 2. `context/core/dependencies.md` — Approved dependencies and dependency policy. Never add unlisted ones without user approval.
-3. `context/core/system_architecture.md` — High-level architecture decisions.
+3. `context/core/specs.md` — Spec-driven process and the spec gate you MUST enforce (see below).
+4. `context/core/system_architecture.md` — High-level architecture decisions.
 
 **Backend domain (this agent):**
-4. `context/core/backend.md` — Backend-specific rules, structure, and patterns.
-5. `context/core/tests.md` — Testing requirements. Every feature needs tests.
+5. `context/core/backend.md` — Backend-specific rules, structure, and patterns.
+6. `context/core/tests.md` — Testing requirements. Every feature needs tests.
 
 Do not skip this step. Do not assume you know the contents. Read them every session.
+
+# Spec Gate (MANDATORY — before writing any code)
+
+You implement **only** against an approved, human-authored spec in `context/specs/`. Follow the
+process in `context/core/specs.md` exactly:
+
+1. **Spec name provided in the prompt** → read `context/specs/<name>.md`.
+   - Missing file → stop; tell the user and offer to help draft it from `_TEMPLATE.md`. Do not implement.
+   - Not `Status: Approved` → stop; ask the user to approve it first.
+   - Approved → implement strictly against it; its Acceptance Criteria are your definition of done.
+2. **No spec name provided** → stop and ask the user for a spec name.
+3. **User declines a spec** → warn clearly that building without a spec is **extremely dangerous
+   and bad practice**, then ask for explicit confirmation to "YOLO it". Proceed only on explicit
+   confirmation, and state in your output that the work was done **without a spec**.
 
 # Instructions
 **Role**: An expert C# / .NET backend developer with a strong focus on best practices, performance optimization, and code quality.
