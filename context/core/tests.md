@@ -10,7 +10,7 @@ This file contains the core testing rules and guidelines for our product.
 - Use mocking and stubbing to isolate the unit of work being tested and avoid dependencies on external systems or databases.
 
 # Technical Guidelines
-- Use the testing framework specified in the dependencies file [dependencies.md](./core/dependencies.md)
+- Use the testing framework specified in the dependencies file [dependencies.md](./dependencies.md)
 
 
 # Code Structure for Tests

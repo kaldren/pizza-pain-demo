@@ -7,7 +7,7 @@ We're using Blazor Web App for our frontend development, which allows us to buil
 - Follow vertical slices architecture to ensure modularity and separation of concerns. Each feature should be developed as an independent module with clear interfaces and minimal dependencies on other modules.
 - Use Blazor's built-in routing for navigation between pages and components.
 - Implement state management using Blazor's built-in features or a suitable state management library to ensure a consistent and predictable application state.
-- Ensure that all frontend features comply with the design specifications outlined in [ui-theme.md](./core/ui-theme.md) to maintain a cohesive and visually appealing user interface.
+- Ensure that all frontend features comply with the design specifications outlined in [ui-theme.md](./ui-theme.md) to maintain a cohesive and visually appealing user interface.
 
 # Code Structure
 ```
