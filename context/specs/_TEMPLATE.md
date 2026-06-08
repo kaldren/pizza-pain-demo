@@ -13,11 +13,8 @@
 ## 1. Summary
 One short paragraph: what this feature is and why we're building it.
 
-## 2. Goals & Non-Goals
-**Goals**
-- ...
-
-**Non-Goals** (explicitly out of scope)
+## 2. Objectives
+**Objectives**
 - ...
 
 ## 3. User Stories
@@ -52,6 +49,3 @@ Numbered and testable.
 The implementation **and its tests** must satisfy every item.
 - [ ] ...
 - [ ] ...
-
-## 10. Open Questions
-- ...

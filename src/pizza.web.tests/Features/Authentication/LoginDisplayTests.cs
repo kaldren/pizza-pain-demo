@@ -1,10 +1,9 @@
 using Bunit;
-using Bunit.TestDoubles;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.DependencyInjection;
-using pizza.web.Components.Layout;
+using pizza.web.Features.Authentication.Components;
 
-namespace pizza.web.tests.Authentication;
+namespace pizza.web.tests.Features.Authentication;
 
 // Covers the app-shell sign-in/sign-out widget (acceptance criteria: an unauthenticated user sees
 // a Sign in action; an authenticated user sees their name + Sign out, and Sign in is hidden).

@@ -36,4 +36,4 @@ The implementation **and its tests** must satisfy every item.
 - [ ] Clicking **Sign out** ends the session and returns the user to a signed-out state.
 - [ ] No Entra secrets are committed; configuration is sourced from user-secrets locally.
 - [ ] UI complies with [ui-theme.md](../core/ui-theme.md).
-- [ ] Minimal amount of tests that cover the critical paths of the auth flow (e.g. sign in, sign out, display user) using the testing approach described in [testing.md](../core/testing.md).
+- [ ] Minimal amount of tests that cover the critical paths of the auth flow (e.g. sign in, sign out, display user) using the testing approach described in [tests.md](../core/tests.md).

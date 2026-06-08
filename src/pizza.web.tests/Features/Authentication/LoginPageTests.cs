@@ -1,9 +1,9 @@
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
-using pizza.web.Components.Pages;
+using pizza.web.Features.Authentication.Pages;
 
-namespace pizza.web.tests.Authentication;
+namespace pizza.web.tests.Features.Authentication;
 
 // Covers the sign-in page (acceptance criteria: a clean Sign in form whose action starts the Entra
 // ID challenge, returning the user to where they came from after authenticating).

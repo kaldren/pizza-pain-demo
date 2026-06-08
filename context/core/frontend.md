@@ -11,9 +11,17 @@ We're using Blazor Web App for our frontend development, which allows us to buil
 
 # Code Structure
 ```
-src/pizza.ui/ (Blazor Web App)
+src/pizza.web/ (Blazor Web App)
+│
+├── App.razor                         <-- Root host document
+├── Routes.razor                      <-- Router + AuthorizeRouteView
+├── _Imports.razor                    <-- Project-wide @using directives (applies to all .razor)
 │
 ├── Features/
+│   ├── Authentication/                 <-- Sign in with Entra ID (spec: login-entra-id)
+│   │   ├── Components/                  <-- LoginDisplay, LoginLayout, RedirectToLogin
+│   │   └── Pages/                       <-- Login.razor (@page "/login")
+│   │
 │   ├── PizzaOrderManagement/
 │   │   ├── Components/               <-- UI items exclusive to ordering
 │   │   │   └── OrderSummaryCard.razor
@@ -34,7 +42,12 @@ src/pizza.ui/ (Blazor Web App)
 ├── Shared/                           <-- SYSTEM-GENERIC (App-wide primitives)
 │   ├── Layout/
 │   │   ├── MainLayout.razor          <-- App shell, sidebar, navbar
-│   │   └── NavMenu.razor
+│   │   ├── NavMenu.razor
+│   │   └── ReconnectModal.razor      <-- Server-circuit reconnect UI
+│   ├── Pages/                        <-- App-level pages not owned by a feature
+│   │   ├── Home.razor                <-- Landing (@page "/")
+│   │   ├── Error.razor               <-- (@page "/Error")
+│   │   └── NotFound.razor            <-- (@page "/not-found")
 │   ├── Components/
 │   │   ├── LoadingSpinner.razor      <-- Pure UI wrapper components
 │   │   ├── CustomButton.razor        <-- Follows your ui-theme.md styles
@@ -43,8 +56,8 @@ src/pizza.ui/ (Blazor Web App)
 │       └── SharedUiModels.cs         <-- Global UI-only models (e.g., Breadcrumbs)
 │
 └── Infrastructure/                   <-- Global Cross-Cutting Technical Concerns
-    ├── Authentication/
-    │   └── CustomAuthStateProvider.cs
+    ├── Authentication/                          <-- Auth wiring shared across features
+    │   └── LogInOrOutEndpointRouteBuilderExtensions.cs  <-- login/logout challenge endpoints
     └── Http/
         └── ApiClient.cs              <-- Centralized HttpClient wrapper configuration
 ```
