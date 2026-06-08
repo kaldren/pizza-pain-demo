@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Identity.Web;
+using pizza.api.Features.PizzaCatalog.GetPizzaDetails;
+using pizza.api.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,11 @@ builder.Services.AddAuthorizationBuilder()
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+// PizzaCatalog: in-memory mock catalog (no database yet — see spec get-pizza-details) plus the
+// per-feature handlers that read from it.
+builder.Services.AddSingleton<IPizzaCatalog, InMemoryPizzaCatalog>();
+builder.Services.AddScoped<GetPizzaDetailsHandler>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,6 +43,9 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// PizzaCatalog endpoints.
+app.MapGetPizzaDetails();
 
 var summaries = new[]
 {

@@ -18,4 +18,8 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\pizza.api\pizza.api.csproj" />
+  </ItemGroup>
+
 </Project>
