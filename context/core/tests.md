@@ -11,6 +11,12 @@ This file contains the core testing rules and guidelines for our product.
 
 # Technical Guidelines
 - Use the testing framework specified in the dependencies file [dependencies.md](./dependencies.md)
+- **Backend** tests use **xUnit**.
+- **Frontend** (Blazor) component tests use **bUnit** together with xUnit. Use bUnit to render
+  components and assert on their output and behavior — for example, rendering a component under a
+  test `AuthenticationStateProvider` to verify `<AuthorizeView>` anonymous vs. authenticated states.
+  Frontend tests live in the `pizza.web` test project, mirroring the feature/vertical-slice
+  structure of `src/pizza.web` (same convention as the backend test layout below).
 
 
 # Code Structure for Tests
