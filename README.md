@@ -4,8 +4,7 @@ PAIN Pizza is an online pizza-ordering application. Users can browse the menu, c
 order, pay securely, and track it in real time. It's built with **.NET 10** — an ASP.NET Core
 backend and a Blazor Web App frontend.
 
-This repository is developed **spec-first** with AI agents: every feature is written down and
-approved as a spec before any code is generated.
+This repository is following the PAIN Methodology (Protected AI-Native Architecture) and is designed to be developed by a collaboration between human developers and AI agents. The codebase is organized around a spec-first workflow, where every feature starts as a spec that defines its goals, user flow, features, and success criteria. Agents then implement these specs in code, ensuring alignment with the product vision and consistency across the application.
 
 ## Documentation
 
