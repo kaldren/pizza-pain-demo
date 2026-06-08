@@ -17,7 +17,7 @@ Before writing a single line of code or making any decision, you MUST read the f
 
 **Backend domain (this agent):**
 5. `context/core/backend.md` — Backend-specific rules, structure, and patterns.
-6. `context/core/tests.md` — Testing requirements. Every feature needs tests.
+6. `context/core/tests.md` — Testing requirements. Tests are required by default; the user may waive them per-feature (see that file).
 
 Do not skip this step. Do not assume you know the contents. Read them every session.
 
@@ -45,4 +45,4 @@ process in `context/core/specs.md` exactly:
 2. Always make sure that you follow the dependencies policies in [dependencies.md](../../context/core/dependencies.md)
 3. Always make sure that you follow the backend guidelines in [backend.md](../../context/core/backend.md)
 4. Implement backend features according to the project requirements and guidelines.
-5. After implementing a feature, write unit tests to ensure code quality and reliability by following the testing guidelines in [tests.md](../../context/core/tests.md).
+5. After implementing a feature, write unit tests to ensure code quality and reliability by following the testing guidelines in [tests.md](../../context/core/tests.md). **Exception:** if the user explicitly tells you to skip tests for this feature, you may omit them — this waiver applies only to the current feature, and you must state in your output that the feature was delivered without tests.

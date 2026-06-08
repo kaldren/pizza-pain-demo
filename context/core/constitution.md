@@ -19,7 +19,13 @@ document, guideline, or instruction conflicts with this file, **this file wins**
   [context/specs/](../specs/). The spec is human-authored and approved *before* any code is
   written. See [specs.md](./specs.md) for the process. Agents must refuse to implement without one.
 - **Vertical slices first.** Features are self-contained modules; avoid cross-feature coupling.
-- **Tests are mandatory.** No feature is "done" without tests per [tests.md](./tests.md).
+- **Tests are mandatory — unless explicitly waived per feature.** By default no feature is "done"
+  without tests per [tests.md](./tests.md). The **only** exception: when the user implementing a
+  feature explicitly instructs the agent to skip tests *for that feature* (e.g. "skip tests",
+  "no tests", "tests optional"). The waiver is **per-feature and per-request** — it never carries
+  over to the next feature, and silence is **not** a waiver. When tests are waived, the agent must
+  still deliver working code and **must state in its output that the feature was delivered without
+  tests**. See [tests.md](./tests.md) for how agents apply this.
 - **Dependency discipline.** Use only approved dependencies in [dependencies.md](./dependencies.md);
   new ones require explicit user approval before use.
 - **Consistency over cleverness.** Match the existing patterns and structure of the codebase.
@@ -31,7 +37,7 @@ document, guideline, or instruction conflicts with this file, **this file wins**
 - [ ] Uses only approved dependencies
 - [ ] If backend, follows the rules in [backend.md](./backend.md)
 - [ ] If frontend, follows the rules in [frontend.md](./frontend.md)
-- [ ] Has tests per [tests.md](./tests.md)
+- [ ] Has tests per [tests.md](./tests.md) — *unless the user explicitly waived tests for this feature (then say so in your output)*
 - [ ] <!-- TODO: add your own gates — e.g. passes linting, reviewed, documented -->
 
 ## 4. Amendments

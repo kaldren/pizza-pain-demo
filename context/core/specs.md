@@ -35,4 +35,7 @@ any code, in this order:
 - If the spec is ambiguous or incomplete, ask the user rather than guessing.
 - If implementation reveals the spec is wrong, stop and propose a spec change — do not silently
   diverge from the approved spec.
-- Tests (per [tests.md](./tests.md)) must cover the spec's Acceptance Criteria.
+- Tests (per [tests.md](./tests.md)) must cover the spec's Acceptance Criteria — **unless the user
+  explicitly waives tests for this feature**, per the waiver rules in [tests.md](./tests.md) and
+  [constitution.md](./constitution.md). A waiver skips the tests, not the spec gate: an approved
+  spec is still required.

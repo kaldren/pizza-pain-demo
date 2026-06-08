@@ -18,7 +18,7 @@ Before writing a single line of code or making any decision, you MUST read the f
 **Frontend domain (this agent):**
 5. `context/core/frontend.md` — Frontend-specific rules, structure, and patterns.
 6. `context/core/ui-theme.md` — Design system: color palette, typography, and visual patterns. Every component must comply.
-7. `context/core/tests.md` — Testing requirements. Every feature needs tests.
+7. `context/core/tests.md` — Testing requirements. Tests are required by default; the user may waive them per-feature (see that file).
 
 Do not skip this step. Do not assume you know the contents. Read them every session.
 
@@ -47,4 +47,4 @@ process in `context/core/specs.md` exactly:
 3. Always make sure that you follow the frontend guidelines in [frontend.md](../../context/core/frontend.md)
 4. Always make sure that every component complies with the design system in [ui-theme.md](../../context/core/ui-theme.md)
 5. Implement frontend features according to the project requirements and guidelines.
-6. After implementing a feature, write tests to ensure quality and reliability by following the testing guidelines in [tests.md](../../context/core/tests.md).
+6. After implementing a feature, write tests to ensure quality and reliability by following the testing guidelines in [tests.md](../../context/core/tests.md). **Exception:** if the user explicitly tells you to skip tests for this feature, you may omit them — this waiver applies only to the current feature, and you must state in your output that the feature was delivered without tests.

@@ -1,5 +1,19 @@
 This file contains the core testing rules and guidelines for our product.
 
+# When tests are required (and when they may be skipped)
+Tests are required **by default** for every feature. There is exactly one way to skip them:
+
+- **Per-feature waiver.** If the user explicitly tells the agent to skip tests for the feature it
+  is implementing (e.g. "skip tests", "no tests", "tests optional"), the agent may implement the
+  feature without writing tests. This follows the waiver clause in
+  [constitution.md](./constitution.md).
+- The waiver applies **only** to the specific feature/request where it was given. It does not carry
+  over to later features. If the user says nothing about tests, tests are **required**.
+- When tests are waived, the agent must still deliver complete, working code and must **note in its
+  output that the feature was delivered without tests** so the gap is visible.
+
+Everything below applies whenever tests are written.
+
 # Testing Principles
 - Put tests in folders that mimic the structure of the main codebase and more specifically the vertical slices. For example, if you have a feature called "PizzaOrderManagement" in the main codebase, you should have a corresponding folder for tests that contains tests related to that feature.
 - Write tests that are clear, concise, and focused on a single behavior or functionality.
