@@ -4,10 +4,12 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>b7e6a3c1-5d2f-4a8e-9c14-3f0a7d6e2b59</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="4.10.0" />
   </ItemGroup>
 
 </Project>
