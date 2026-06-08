@@ -1,0 +1,84 @@
+.login-card {
+    width: 100%;
+    max-width: 25rem;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8E0; /* Borders/Dividers */
+    border-radius: 1rem;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 18px 40px rgba(26, 29, 26, 0.08);
+    text-align: center;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+}
+
+.brand-mark {
+    font-size: 1.75rem;
+    line-height: 1;
+}
+
+.brand-name {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #1A1D1A; /* Text (Primary) */
+    letter-spacing: -0.01em;
+}
+
+.login-title {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: #1A1D1A;
+    margin: 0 0 0.5rem;
+}
+
+.login-subtitle {
+    color: #5A625A; /* Text (Secondary) */
+    font-size: 0.95rem;
+    margin: 0 0 2rem;
+}
+
+.ms-signin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background-color: #A5CF83; /* Primary Main — CTA */
+    color: #1A1D1A;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 0.6rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.ms-signin:hover {
+    background-color: #95c46f;
+}
+
+.ms-signin:active {
+    transform: translateY(1px);
+}
+
+.ms-signin:focus-visible {
+    outline: 3px solid #ECB65F; /* Secondary Main */
+    outline-offset: 2px;
+}
+
+.ms-logo {
+    flex: 0 0 auto;
+}
+
+.login-foot {
+    margin: 1.5rem 0 0;
+    font-size: 0.8rem;
+    color: #5A625A;
+}

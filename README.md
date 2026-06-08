@@ -24,3 +24,28 @@ cp context/specs/_TEMPLATE.md context/specs/my-feature.md
 ```
 
 See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for the full process.
+
+## Running the web app with Microsoft Entra ID sign-in
+
+The web app (`src/pizza.web`) authenticates users with Microsoft Entra ID (spec
+[`login-entra-id`](context/specs/login-entra-id.md)). Entra configuration is **never committed** —
+non-secret scaffolding lives in `appsettings.json` (`AzureAd:Instance`, `AzureAd:CallbackPath`) and
+the tenant/client/secret values come from [user-secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets).
+
+1. In the Entra app registration (**Authentication** blade), register these redirect URIs for the
+   `https` launch profile (port `7155`):
+   - Redirect URI (Web): `https://localhost:7155/signin-oidc`
+   - Front-channel logout URL: `https://localhost:7155/signout-callback-oidc`
+2. Create a client secret (**Certificates & secrets > New client secret**).
+3. Set the local secrets (run from `src/pizza.web`):
+   ```
+   dotnet user-secrets set "AzureAd:TenantId"     "<tenant-id>"
+   dotnet user-secrets set "AzureAd:ClientId"     "<client-id>"
+   dotnet user-secrets set "AzureAd:ClientSecret" "<client-secret>"
+   ```
+   With a client secret present, sign-in uses the OIDC **authorization code flow + PKCE**
+   (the recommended confidential-client flow). Without it, Microsoft.Identity.Web falls back to
+   the implicit `id_token` flow, which additionally requires *ID tokens* to be enabled in the
+   app registration.
+4. Run: `dotnet run --launch-profile https` (from `src/pizza.web`) and browse to
+   `https://localhost:7155`.

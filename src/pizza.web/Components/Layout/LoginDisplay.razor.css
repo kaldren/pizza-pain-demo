@@ -1,0 +1,60 @@
+.login-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.user-name {
+    color: #1A1D1A; /* Text (Primary) */
+    font-weight: 600;
+    font-size: 0.95rem;
+    max-width: 14rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.logout-form {
+    margin: 0;
+}
+
+.signin-link,
+.logout-btn {
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.signin-link {
+    background-color: #A5CF83; /* Primary Main — CTA */
+    color: #1A1D1A;
+    border: 1px solid transparent;
+}
+
+.signin-link:hover {
+    background-color: #95c46f;
+}
+
+.logout-btn {
+    background-color: transparent;
+    color: #5A625A; /* Text (Secondary) */
+    border: 1px solid #E2E8E0; /* Borders/Dividers */
+}
+
+.logout-btn:hover {
+    background-color: #F0E76F; /* Primary Light / Accent */
+    color: #1A1D1A;
+    border-color: #F0E76F;
+}
+
+.signin-link:focus-visible,
+.logout-btn:focus-visible {
+    outline: 3px solid #ECB65F; /* Secondary Main */
+    outline-offset: 2px;
+}

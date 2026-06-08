@@ -1,0 +1,17 @@
+@* Top-right app-shell widget: shows the signed-in user + Sign out, or a Sign in link. *@
+<div class="login-display">
+    <AuthorizeView>
+        <Authorized>
+            <span class="user-name" title="@context.User.Identity?.Name">
+                @context.User.Identity?.Name
+            </span>
+            <form class="logout-form" action="authentication/logout" method="post">
+                <AntiforgeryToken />
+                <button type="submit" class="logout-btn">Sign out</button>
+            </form>
+        </Authorized>
+        <NotAuthorized>
+            <a class="signin-link" href="login">Sign in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
