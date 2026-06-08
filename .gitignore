@@ -1,0 +1,72 @@
+## .NET / ASP.NET Core / Blazor .gitignore
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+build/
+bld/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio / Rider / VS Code
+.vs/
+.vscode/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.sln.docstates
+.idea/
+*.swp
+
+# Build / test artifacts
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+coverage*.json
+coverage*.xml
+coverage*.info
+[Cc]overage/
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET / Blazor specific
+**/wwwroot/dist/
+**/wwwroot/_framework/
+node_modules/
+*.publishsettings
+PublishScripts/
+**/Properties/PublishProfiles/*.pubxml.user
+*.azurePubxml
+
+# User-specific secrets / config
+appsettings.*.local.json
+secrets.json
+*.dev.json
+
+# Misc
+*.cache
+*.tmp
+*.bak
+[Tt]humbs.db
+Thumbs.db
+*.log
