@@ -47,6 +47,12 @@ builder.Services.AddHttpClient<ApiClient>(client =>
     client.BaseAddress = new Uri(baseUrl);
 });
 builder.Services.AddScoped<CatalogState>();
+builder.Services.AddScoped<PizzaDetailsState>();
+
+// Reviews on the pizza details page. There is no reviews backend yet, so reviews come from an
+// in-memory mock behind IReviewsProvider; the page depends only on the interface so a real reviews
+// API can be slotted in later without touching the UI (spec pizza-details-page).
+builder.Services.AddSingleton<IReviewsProvider, MockReviewsProvider>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

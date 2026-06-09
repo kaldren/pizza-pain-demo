@@ -1,0 +1,89 @@
+@page "/pizza/{Id:int}"
+@attribute [Authorize]
+@inject PizzaDetailsState Details
+@inject IReviewsProvider ReviewsProvider
+
+<PageTitle>@PageTitleText</PageTitle>
+
+<section class="details">
+    <a class="back-link" href="/">← Back to menu</a>
+
+    @switch (Details.Status)
+    {
+        case PizzaDetailsStatus.Loading:
+            <div class="details-status" role="status" aria-live="polite">
+                <span class="spinner" aria-hidden="true"></span>
+                <span>Loading the pizza…</span>
+            </div>
+            break;
+
+        case PizzaDetailsStatus.NotFound:
+            <div class="details-status" role="status">
+                <span class="status-emoji" aria-hidden="true">🍕</span>
+                <p>We couldn't find that pizza. It may have been taken off the menu.</p>
+            </div>
+            break;
+
+        case PizzaDetailsStatus.Error:
+            <div class="details-status details-error" role="alert">
+                <span class="status-emoji" aria-hidden="true">😕</span>
+                <p>We couldn't load this pizza right now. Please try again in a moment.</p>
+            </div>
+            break;
+
+        case PizzaDetailsStatus.Loaded:
+            var pizza = Details.Pizza!;
+            <article class="pizza-detail">
+                <div class="detail-media">
+                    <img class="detail-img"
+                         src="@pizza.ImageUrl"
+                         alt="@pizza.Name"
+                         onerror="this.style.display='none';this.parentElement.classList.add('img-fallback');" />
+                </div>
+
+                <div class="detail-body">
+                    <h1 class="detail-name">@pizza.Name</h1>
+                    <p class="detail-price">@PriceFormatting.Format(pizza.Price, pizza.Currency)</p>
+                    <p class="detail-desc">@pizza.Description</p>
+
+                    @if (pizza.Toppings.Count > 0)
+                    {
+                        <h2 class="detail-subhead">Toppings</h2>
+                        <ul class="topping-list">
+                            @foreach (var topping in pizza.Toppings)
+                            {
+                                <li class="topping">@topping</li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </article>
+
+            <ReviewList Reviews="_reviews" />
+            break;
+    }
+</section>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private IReadOnlyList<Review> _reviews = [];
+
+    private string PageTitleText =>
+        Details.Status == PizzaDetailsStatus.Loaded && Details.Pizza is not null
+            ? $"{Details.Pizza.Name} · Pizza Pain"
+            : "Pizza · Pizza Pain";
+
+    // Load the pizza and its (mock) reviews as the page initializes. The pizza fetch maps failures to
+    // a friendly status inside PizzaDetailsState; reviews are independent, so a pizza with none is not
+    // an error (spec pizza-details-page §4.10).
+    protected override async Task OnInitializedAsync()
+    {
+        await Details.LoadAsync(Id);
+        if (Details.Status == PizzaDetailsStatus.Loaded)
+        {
+            _reviews = await ReviewsProvider.GetReviewsAsync(Id);
+        }
+    }
+}

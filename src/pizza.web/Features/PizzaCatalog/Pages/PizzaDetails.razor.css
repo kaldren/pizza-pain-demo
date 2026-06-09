@@ -1,0 +1,158 @@
+.details {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: #5A625A; /* Text (Secondary) */
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    color: #1A1D1A; /* Text (Primary) */
+}
+
+.back-link:focus-visible {
+    outline: 3px solid #ECB65F; /* Secondary Main */
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+}
+
+/* Pizza header: image alongside the details, collapsing to a single column on narrow screens. */
+.pizza-detail {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 40rem) {
+    .pizza-detail {
+        grid-template-columns: 1fr;
+    }
+}
+
+.detail-media {
+    position: relative;
+    aspect-ratio: 16 / 11;
+    background-color: #FDF6E9; /* warm tint behind the image */
+    border: 1px solid #E2E8E0; /* Borders/Dividers */
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.detail-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Themed fallback shown when the image fails to load (mock data uses placeholder URLs). */
+.detail-media.img-fallback::after {
+    content: "🍕";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+}
+
+.detail-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.detail-name {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: #1A1D1A; /* Text (Primary) */
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.detail-price {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #1A1D1A;
+    margin: 0;
+}
+
+.detail-desc {
+    color: #5A625A; /* Text (Secondary) */
+    font-size: 1rem;
+    line-height: 1.55;
+    margin: 0.25rem 0 0.5rem;
+}
+
+.detail-subhead {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #1A1D1A;
+    margin: 0.5rem 0 0.1rem;
+}
+
+.topping-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Toppings as filter-chip-style pills, per the Secondary palette usage in ui-theme. */
+.topping {
+    background-color: #FBF3E2; /* soft honey tint */
+    border: 1px solid #ECB65F; /* Secondary Main — callout border */
+    color: #1A1D1A;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+}
+
+.details-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    padding: 4rem 1.5rem;
+    text-align: center;
+    color: #5A625A;
+    font-size: 1.05rem;
+}
+
+.details-error {
+    color: #1A1D1A;
+}
+
+.status-emoji {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.spinner {
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 3px solid #E2E8E0; /* Borders/Dividers */
+    border-top-color: #A5CF83; /* Primary Main */
+    border-radius: 50%;
+    animation: details-spin 0.8s linear infinite;
+}
+
+@keyframes details-spin {
+    to { transform: rotate(360deg); }
+}

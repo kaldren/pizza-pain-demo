@@ -1,0 +1,65 @@
+@using System.Globalization
+@using pizza.web.Features.PizzaCatalog.Models
+
+@* Customer reviews for a pizza (spec pizza-details-page §4.8–4.10). Shows a summary header with the
+   average rating and a list of reviews, or a friendly empty state when there are none. Ratings are
+   conveyed to assistive tech via aria-label, not colour alone. *@
+<section class="reviews" aria-labelledby="reviews-heading">
+    <header class="reviews-head">
+        <h2 id="reviews-heading" class="reviews-title">Reviews</h2>
+        @if (Reviews.Count > 0)
+        {
+            <div class="reviews-summary">
+                <span class="reviews-stars" aria-label="@AverageLabel">@Stars(RoundedAverage)</span>
+                <span class="reviews-meta">@Average.ToString("0.0", CultureInfo.InvariantCulture) · @CountLabel</span>
+            </div>
+        }
+    </header>
+
+    @if (Reviews.Count == 0)
+    {
+        <div class="reviews-empty" role="status">
+            <span class="reviews-empty-emoji" aria-hidden="true">📝</span>
+            <p>No reviews yet. Be the first to try it!</p>
+        </div>
+    }
+    else
+    {
+        <ul class="review-items">
+            @foreach (var review in Reviews)
+            {
+                <li class="review">
+                    <div class="review-head">
+                        <span class="review-author">@review.Author</span>
+                        <span class="review-stars" aria-label="@RatingLabel(review.Rating)">@Stars(review.Rating)</span>
+                    </div>
+                    <p class="review-text">@review.Text</p>
+                    <time class="review-date" datetime="@review.Date.ToString("yyyy-MM-dd")">
+                        @review.Date.ToString("d MMM yyyy", CultureInfo.InvariantCulture)
+                    </time>
+                </li>
+            }
+        </ul>
+    }
+</section>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public required IReadOnlyList<Review> Reviews { get; set; }
+
+    private double Average => Reviews.Count == 0 ? 0 : Reviews.Average(review => review.Rating);
+
+    private int RoundedAverage => (int)Math.Round(Average, MidpointRounding.AwayFromZero);
+
+    private string AverageLabel =>
+        $"Average rating {Average.ToString("0.0", CultureInfo.InvariantCulture)} out of 5 stars";
+
+    private string CountLabel => Reviews.Count == 1 ? "1 review" : $"{Reviews.Count} reviews";
+
+    private static string RatingLabel(int rating) => $"{rating} out of 5 stars";
+
+    // Filled stars up to the rating, hollow stars for the remainder (always out of 5).
+    private static string Stars(int rating) =>
+        new string('★', Math.Clamp(rating, 0, 5)) + new string('☆', 5 - Math.Clamp(rating, 0, 5));
+}
