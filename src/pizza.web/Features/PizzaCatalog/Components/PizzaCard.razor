@@ -1,7 +1,10 @@
 @using pizza.web.Features.PizzaCatalog.Models
+@using pizza.web.Features.Cart.Services
+@inject CartState Cart
 
-@* A single pizza "box" in the catalog grid: image, name, description, price, and a link to the
-   pizza details page (/pizza/{id}). The details page itself is out of scope for this slice. *@
+@* A single pizza "box" in the catalog grid: image, name, description, price, a link to the pizza
+   details page (/pizza/{id}), and an "Add to cart" button. The button adds this pizza to the shared
+   CartState; the live top-right cart indicator is the user-visible confirmation (spec add-to-cart). *@
 <article class="pizza-card">
     <div class="card-media">
         <img class="card-img"
@@ -15,9 +18,16 @@
         <h3 class="card-name">@Pizza.Name</h3>
         <p class="card-desc">@Pizza.Description</p>
 
+        <span class="card-price">@PriceFormatting.Format(Pizza.Price, Pizza.Currency)</span>
+
         <div class="card-foot">
-            <span class="card-price">@PriceFormatting.Format(Pizza.Price, Pizza.Currency)</span>
-            <a class="card-cta" href="@DetailsUrl">View details</a>
+            <a class="card-details" href="@DetailsUrl">View details</a>
+            <button type="button"
+                    class="card-add"
+                    @onclick="AddToCart"
+                    aria-label="@($"Add {Pizza.Name} to cart")">
+                Add to cart
+            </button>
         </div>
     </div>
 </article>
@@ -28,4 +38,6 @@
     public required PizzaSummary Pizza { get; set; }
 
     private string DetailsUrl => $"/pizza/{Pizza.Id}";
+
+    private void AddToCart() => Cart.Add(Pizza);
 }

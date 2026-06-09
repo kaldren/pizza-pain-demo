@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
 using pizza.web;
+using pizza.web.Features.Cart.Services;
 using pizza.web.Features.PizzaCatalog.Services;
 using pizza.web.Infrastructure.Authentication;
 using pizza.web.Infrastructure.Http;
@@ -48,6 +49,10 @@ builder.Services.AddHttpClient<ApiClient>(client =>
 });
 builder.Services.AddScoped<CatalogState>();
 builder.Services.AddScoped<PizzaDetailsState>();
+
+// In-memory shopping cart (spec add-to-cart). Scoped so the catalog cards and the app-shell cart
+// indicator share one instance per Interactive Server circuit; there is no cart backend in this slice.
+builder.Services.AddScoped<CartState>();
 
 // Reviews on the pizza details page. There is no reviews backend yet, so reviews come from an
 // in-memory mock behind IReviewsProvider; the page depends only on the interface so a real reviews

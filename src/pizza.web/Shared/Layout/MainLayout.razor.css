@@ -31,6 +31,11 @@ main {
         text-decoration: underline;
     }
 
+    /* Keep the cart indicator clear of the user/sign-out widget to its right. */
+    .top-row ::deep .cart-indicator {
+        margin-right: 1.5rem;
+    }
+
     .top-row ::deep a:first-child {
         overflow: hidden;
         text-overflow: ellipsis;

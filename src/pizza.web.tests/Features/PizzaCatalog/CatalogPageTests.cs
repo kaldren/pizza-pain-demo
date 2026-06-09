@@ -2,6 +2,7 @@ using System.Net;
 using System.Text;
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
+using pizza.web.Features.Cart.Services;
 using pizza.web.Features.PizzaCatalog.Services;
 using pizza.web.Infrastructure.Http;
 using pizza.web.Shared.Pages;
@@ -52,7 +53,7 @@ public class CatalogPageTests : BunitContext
         // The price is formatted with its currency symbol.
         Assert.Contains("£9.50", cut.Markup);
         // Each card links to its details page.
-        Assert.Equal("/pizza/1", cut.FindAll("a.card-cta")[0].GetAttribute("href"));
+        Assert.Equal("/pizza/1", cut.FindAll("a.card-details")[0].GetAttribute("href"));
     }
 
     [Fact]
@@ -92,6 +93,8 @@ public class CatalogPageTests : BunitContext
         };
         Services.AddSingleton(new ApiClient(http));
         Services.AddScoped<CatalogState>();
+        // The catalog's PizzaCards inject CartState for their "Add to cart" buttons.
+        Services.AddScoped<CartState>();
     }
 
     private sealed class StubHandler(HttpStatusCode status, string? json) : HttpMessageHandler

@@ -1,0 +1,32 @@
+@using pizza.web.Features.Cart.Services
+@implements IDisposable
+@inject CartState Cart
+
+@* Top-right app-shell widget (next to the user info) showing how many items are in the cart. At zero
+   items the numeric badge is hidden but the icon stays, so empty reads differently from populated
+   (spec add-to-cart §4.3–§4.5, Q4). The count is conveyed to assistive tech via aria-label, not by
+   color alone. Subscribes to CartState.Changed so it re-renders live when a pizza is added. *@
+<div class="cart-indicator" role="status" aria-live="polite" aria-label="@AriaLabel">
+    <span class="cart-icon" aria-hidden="true">🛒</span>
+    @if (Cart.ItemCount > 0)
+    {
+        <span class="cart-badge">@Cart.ItemCount</span>
+    }
+</div>
+
+@code {
+    private string AriaLabel => Cart.ItemCount switch
+    {
+        0 => "Cart: empty",
+        1 => "Cart: 1 item",
+        var n => $"Cart: {n} items"
+    };
+
+    protected override void OnInitialized() => Cart.Changed += OnCartChanged;
+
+    // CartState raises Changed off the UI thread context; marshal back onto the renderer before
+    // re-rendering.
+    private void OnCartChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => Cart.Changed -= OnCartChanged;
+}

@@ -64,41 +64,66 @@
     flex: 1 1 auto;
 }
 
-.card-foot {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    margin-top: 0.4rem;
-}
-
 .card-price {
     font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     font-weight: 700;
     font-size: 1.1rem;
     color: #1A1D1A;
+    margin-top: 0.4rem;
 }
 
-.card-cta {
-    background-color: #A5CF83; /* Primary Main — CTA */
-    color: #1A1D1A;
+.card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 0.6rem;
+}
+
+/* Secondary affordance: a quiet link to the details page. */
+.card-details {
+    color: #5A625A; /* Text (Secondary) */
     font-weight: 600;
     font-size: 0.88rem;
-    padding: 0.5rem 0.9rem;
-    border-radius: 0.55rem;
     text-decoration: none;
+    padding: 0.5rem 0.2rem;
+}
+
+.card-details:hover {
+    color: #1A1D1A;
+    text-decoration: underline;
+}
+
+.card-details:focus-visible {
+    outline: 3px solid #ECB65F; /* Secondary Main */
+    outline-offset: 2px;
+    border-radius: 0.4rem;
+}
+
+/* Primary CTA: add this pizza to the cart. */
+.card-add {
+    background-color: #A5CF83; /* Primary Main — CTA */
+    color: #1A1D1A;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.88rem;
+    line-height: 1;
+    padding: 0.55rem 0.95rem;
+    border: 1px solid transparent;
+    border-radius: 0.55rem;
+    cursor: pointer;
     transition: background-color 0.15s ease, transform 0.05s ease;
 }
 
-.card-cta:hover {
+.card-add:hover {
     background-color: #95c46f;
 }
 
-.card-cta:active {
+.card-add:active {
     transform: translateY(1px);
 }
 
-.card-cta:focus-visible {
+.card-add:focus-visible {
     outline: 3px solid #ECB65F; /* Secondary Main */
     outline-offset: 2px;
 }

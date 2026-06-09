@@ -1,5 +1,9 @@
 @page "/"
 @attribute [Authorize]
+@* Interactive Server so the per-card "Add to cart" buttons run their click handlers. Prerendering is
+   disabled to avoid fetching the catalog twice (once static, once on the circuit) and so the cards
+   share the circuit's scoped CartState with the top-right indicator (spec add-to-cart §4.9, Q1/Q8). *@
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
 @inject CatalogState Catalog
 
 <PageTitle>Menu · Pizza Pain</PageTitle>
