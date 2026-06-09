@@ -29,6 +29,12 @@ document, guideline, or instruction conflicts with this file, **this file wins**
 - **Dependency discipline.** Use only approved dependencies in [dependencies.md](./dependencies.md);
   new ones require explicit user approval before use.
 - **Consistency over cleverness.** Match the existing patterns and structure of the codebase.
+- **Document every feature for users.** No feature is "done" without a short, plain-language
+  **user-facing** feature doc in [docs/](../../docs/) that explains what the feature does for the
+  user (not how it is built). Match the tone of [docs/project.md](../../docs/project.md): brief,
+  easy to understand, no implementation detail. This is separate from the spec in
+  [context/specs/](../specs/) (scope & acceptance, for builders) and from
+  [docs/development.md](../../docs/development.md) (the dev process).
 - **Security & data protection.** <!-- TODO: state your auth, secrets, and data-handling rules -->
 
 ## 3. Definition of Done
@@ -38,7 +44,8 @@ document, guideline, or instruction conflicts with this file, **this file wins**
 - [ ] If backend, follows the rules in [backend.md](./backend.md)
 - [ ] If frontend, follows the rules in [frontend.md](./frontend.md)
 - [ ] Has tests per [tests.md](./tests.md) — *unless the user explicitly waived tests for this feature (then say so in your output)*
-- [ ] <!-- TODO: add your own gates — e.g. passes linting, reviewed, documented -->
+- [ ] Ships a short, user-facing feature doc in [docs/](../../docs/) explaining the feature (see §2)
+- [ ] <!-- TODO: add your own gates — e.g. passes linting, reviewed -->
 
 ## 4. Amendments
 This document changes only by explicit user decision. Agents may *propose* amendments but must
