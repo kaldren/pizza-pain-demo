@@ -1,0 +1,41 @@
+@using pizza.web.Features.PizzaCatalog.Models
+
+@* A single pizza "box" in the catalog grid: image, name, description, price, and a link to the
+   pizza details page (/pizza/{id}). The details page itself is out of scope for this slice. *@
+<article class="pizza-card">
+    <div class="card-media">
+        <img class="card-img"
+             src="@Pizza.ImageUrl"
+             alt="@Pizza.Name"
+             loading="lazy"
+             onerror="this.style.display='none';this.parentElement.classList.add('img-fallback');" />
+    </div>
+
+    <div class="card-body">
+        <h3 class="card-name">@Pizza.Name</h3>
+        <p class="card-desc">@Pizza.Description</p>
+
+        <div class="card-foot">
+            <span class="card-price">@FormatPrice(Pizza.Price, Pizza.Currency)</span>
+            <a class="card-cta" href="@DetailsUrl">View details</a>
+        </div>
+    </div>
+</article>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public required PizzaSummary Pizza { get; set; }
+
+    private string DetailsUrl => $"/pizza/{Pizza.Id}";
+
+    // Format the price with a currency symbol where we know one, falling back to the ISO code so an
+    // unrecognized currency still renders a sensible amount (e.g. "12.00 SEK").
+    private static string FormatPrice(decimal price, string currency) => currency switch
+    {
+        "GBP" => $"£{price:0.00}",
+        "USD" => $"${price:0.00}",
+        "EUR" => $"€{price:0.00}",
+        _ => $"{price:0.00} {currency}"
+    };
+}

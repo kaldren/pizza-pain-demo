@@ -11,4 +11,7 @@ public interface IPizzaCatalog
 {
     /// <summary>Returns the pizza with the given id, or <c>null</c> if none exists.</summary>
     Pizza? FindById(int id);
+
+    /// <summary>Returns every pizza in the catalog, in natural order. Empty if there are none.</summary>
+    IReadOnlyList<Pizza> GetAll();
 }

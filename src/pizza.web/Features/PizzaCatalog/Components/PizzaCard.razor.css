@@ -1,0 +1,104 @@
+.pizza-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8E0; /* Borders/Dividers */
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(26, 29, 26, 0.06);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.pizza-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px rgba(26, 29, 26, 0.1);
+}
+
+.card-media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background-color: #FDF6E9; /* warm tint behind the image */
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Themed fallback shown when the image fails to load (mock data uses placeholder URLs). */
+.card-media.img-fallback::after {
+    content: "🍕";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.1rem 1.2rem 1.3rem;
+    flex: 1 1 auto;
+}
+
+.card-name {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #1A1D1A; /* Text (Primary) */
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.card-desc {
+    color: #5A625A; /* Text (Secondary) */
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+    flex: 1 1 auto;
+}
+
+.card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 0.4rem;
+}
+
+.card-price {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #1A1D1A;
+}
+
+.card-cta {
+    background-color: #A5CF83; /* Primary Main — CTA */
+    color: #1A1D1A;
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.55rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.card-cta:hover {
+    background-color: #95c46f;
+}
+
+.card-cta:active {
+    transform: translateY(1px);
+}
+
+.card-cta:focus-visible {
+    outline: 3px solid #ECB65F; /* Secondary Main */
+    outline-offset: 2px;
+}

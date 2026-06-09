@@ -1,8 +1,51 @@
-﻿@page "/"
+@page "/"
 @attribute [Authorize]
+@inject CatalogState Catalog
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Menu · Pizza Pain</PageTitle>
 
-<h1>Hello, world!</h1>
+<section class="catalog">
+    <header class="catalog-head">
+        <h1 class="catalog-title">Our Menu</h1>
+        <p class="catalog-subtitle">Every pizza we're serving up right now. Pick one to see the details.</p>
+    </header>
 
-Welcome to your new app.
+    @switch (Catalog.Status)
+    {
+        case CatalogStatus.Loading:
+            <div class="catalog-status" role="status" aria-live="polite">
+                <span class="spinner" aria-hidden="true"></span>
+                <span>Loading the menu…</span>
+            </div>
+            break;
+
+        case CatalogStatus.Error:
+            <div class="catalog-status catalog-error" role="alert">
+                <span class="status-emoji" aria-hidden="true">😕</span>
+                <p>We couldn't load the menu right now. Please try again in a moment.</p>
+            </div>
+            break;
+
+        case CatalogStatus.Empty:
+            <div class="catalog-status" role="status">
+                <span class="status-emoji" aria-hidden="true">🍽️</span>
+                <p>No pizzas available at the moment. Check back soon!</p>
+            </div>
+            break;
+
+        case CatalogStatus.Loaded:
+            <div class="catalog-grid">
+                @foreach (var pizza in Catalog.Pizzas)
+                {
+                    <PizzaCard Pizza="pizza" />
+                }
+            </div>
+            break;
+    }
+</section>
+
+@code {
+    // Fetch the catalog as the page initializes (runs during server-side rendering — no token needed
+    // since GET /pizzas is anonymous). A failed fetch is mapped to the error state inside CatalogState.
+    protected override Task OnInitializedAsync() => Catalog.LoadAsync();
+}

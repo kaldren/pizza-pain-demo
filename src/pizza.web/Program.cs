@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
 using pizza.web;
+using pizza.web.Features.PizzaCatalog.Services;
 using pizza.web.Infrastructure.Authentication;
+using pizza.web.Infrastructure.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,18 @@ builder.Services.Configure<CookieAuthenticationOptions>(
 
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
+
+// HTTP integration with the Pizza Pain API (src/pizza.api). The base address is sourced from the
+// "PizzaApi:BaseUrl" config key so local vs. deployed environments differ only by configuration.
+// ApiClient is the single seam features use to call the API; CatalogState consumes it to fetch the
+// catalog for the home page (spec home-pizza-catalog).
+builder.Services.AddHttpClient<ApiClient>(client =>
+{
+    var baseUrl = builder.Configuration["PizzaApi:BaseUrl"]
+        ?? throw new InvalidOperationException("PizzaApi:BaseUrl is not configured.");
+    client.BaseAddress = new Uri(baseUrl);
+});
+builder.Services.AddScoped<CatalogState>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

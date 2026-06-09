@@ -39,4 +39,6 @@ public sealed class InMemoryPizzaCatalog : IPizzaCatalog
     ];
 
     public Pizza? FindById(int id) => Pizzas.FirstOrDefault(pizza => pizza.Id == id);
+
+    public IReadOnlyList<Pizza> GetAll() => Pizzas;
 }

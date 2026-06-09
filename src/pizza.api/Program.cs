@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Identity.Web;
+using pizza.api.Features.PizzaCatalog.GetPizzaCatalog;
 using pizza.api.Features.PizzaCatalog.GetPizzaDetails;
 using pizza.api.Infrastructure.Data;
 
@@ -29,6 +30,7 @@ builder.Services.AddOpenApi();
 // per-feature handlers that read from it.
 builder.Services.AddSingleton<IPizzaCatalog, InMemoryPizzaCatalog>();
 builder.Services.AddScoped<GetPizzaDetailsHandler>();
+builder.Services.AddScoped<GetPizzaCatalogHandler>();
 
 var app = builder.Build();
 
@@ -45,6 +47,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // PizzaCatalog endpoints.
+app.MapGetPizzaCatalog();
 app.MapGetPizzaDetails();
 
 var summaries = new[]
