@@ -8,41 +8,33 @@ This file contains the core backend rules and guidelines for our product. It ser
 - Implement proper error handling and logging to facilitate debugging and monitoring of backend services.
 
 # Code Structure
+Each use case is one folder of `{Endpoint, Handler, Models}.cs`. The tree below shows the slices that
+**exist today**; `(future)` entries illustrate where new work goes — they are the pattern to follow,
+not existing code.
+
 ```
 src/pizza.api/
 │
 ├── Features/
-│   ├── PizzaOrderManagement/
-│   │   ├── CreateOrder/
-│   │   │   ├── CreateOrderEndpoint.cs
-│   │   │   ├── CreateOrderHandler.cs
-│   │   │   └── CreateOrderModels.cs
-│   │   └── GetOrderDetails/
-│   |       ├── GetOrderDetailsEndpoint.cs
-│   |       ├── GetOrderDetailsHandler.cs
-│   |       └── GetOrderDetailsModels.cs
-│   |
 │   └── PizzaCatalog/
-│       ├── GetFeaturedPizzas/
-│       │   ├── GetFeaturedPizzasEndpoint.cs
-│       │   ├── GetFeaturedPizzasHandler.cs
-│       │   └── GetFeaturedPizzasModels.cs
-│       └── GetPizzaDetails/
+│       ├── GetPizzaCatalog/                 <-- GET /pizzas
+│       │   ├── GetPizzaCatalogEndpoint.cs
+│       │   ├── GetPizzaCatalogHandler.cs
+│       │   └── GetPizzaCatalogModels.cs
+│       └── GetPizzaDetails/                 <-- GET /pizzas/{id}
 │           ├── GetPizzaDetailsEndpoint.cs
 │           ├── GetPizzaDetailsHandler.cs
 │           └── GetPizzaDetailsModels.cs
+│   # (future) PizzaOrderManagement/CreateOrder/, GetOrderDetails/ — same {Endpoint,Handler,Models} shape
 │
 ├── Domain/
-│   ├── Events/
-│   │   ├── OrderCreated.cs
-│   │   └── OrderUpdated.cs
-│   ├── Entities/
-│   │   ├── Pizza.cs
-│   │   └── Order.cs
+│   └── Entities/
+│       └── Pizza.cs
+│   # (future) Entities/Order.cs · Events/OrderCreated.cs — domain entities & events
 │
 └── Infrastructure/
-    ├── Data/
-    │   └── PizzaDbContext.cs
-    └── Payment/
-        └── ThirdPartyPaymentService.cs
+    └── Data/
+        ├── IPizzaCatalog.cs                 <-- catalog contract (data source seam)
+        └── InMemoryPizzaCatalog.cs          <-- hard-coded mock; swapped for EF Core later
+    # (future) Data/PizzaDbContext.cs (EF Core + PostgreSQL) · Payment/ — see system_architecture.md
 ```

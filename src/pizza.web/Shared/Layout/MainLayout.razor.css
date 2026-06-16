@@ -31,7 +31,6 @@ main {
         text-decoration: underline;
     }
 
-    /* Keep the cart indicator clear of the user/sign-out widget to its right. */
     .top-row ::deep .cart-indicator {
         margin-right: 1.5rem;
     }
@@ -67,12 +66,6 @@ main {
         position: sticky;
         top: 0;
         z-index: 1;
-    }
-
-    .top-row.auth ::deep a:first-child {
-        flex: 1;
-        text-align: right;
-        width: 0;
     }
 
     .top-row, article {

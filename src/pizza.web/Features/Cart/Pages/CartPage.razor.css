@@ -1,0 +1,254 @@
+.cart-page {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 1.5rem 0 3rem;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1A1D1A; /* Text (Primary) */
+}
+
+.cart-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+}
+
+.cart-title {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.7rem;
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+
+.cart-back {
+    color: #5A625A; /* Text (Secondary) */
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.cart-back:hover {
+    color: #1A1D1A;
+    text-decoration: underline;
+}
+
+.cart-back:focus-visible {
+    outline: 3px solid #ECB65F; /* Secondary Main */
+    outline-offset: 2px;
+    border-radius: 0.3rem;
+}
+
+/* ---- Empty state ------------------------------------------------------- */
+.cart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 3rem 1rem;
+    text-align: center;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8E0; /* Borders/Dividers */
+    border-radius: 1rem;
+}
+
+.cart-empty-emoji {
+    font-size: 2.6rem;
+    line-height: 1;
+}
+
+.cart-empty-text {
+    margin: 0;
+    color: #5A625A; /* Text (Secondary) */
+    font-size: 1.05rem;
+}
+
+.cart-empty-cta {
+    background-color: #A5CF83; /* Primary Main — CTA */
+    color: #1A1D1A;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.55rem;
+}
+
+.cart-empty-cta:hover {
+    background-color: #95c46f;
+}
+
+.cart-empty-cta:focus-visible {
+    outline: 3px solid #ECB65F; /* Secondary Main */
+    outline-offset: 2px;
+}
+
+/* ---- Line list --------------------------------------------------------- */
+.cart-lines {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cart-line {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8E0; /* Borders/Dividers */
+    border-radius: 0.85rem;
+}
+
+.line-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.line-name {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.line-unit {
+    color: #5A625A; /* Text (Secondary) */
+    font-size: 0.85rem;
+}
+
+/* ---- Quantity stepper -------------------------------------------------- */
+.line-qty {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border: 1px solid #E2E8E0;
+    border-radius: 0.6rem;
+    padding: 0.2rem;
+    background-color: #FDFCF7; /* Canvas (Light) */
+}
+
+.qty-btn {
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #1A1D1A;
+    background-color: #F0E76F; /* Primary Light / Accent */
+    border: 1px solid transparent;
+    border-radius: 0.45rem;
+    cursor: pointer;
+    transition: background-color 0.12s ease, transform 0.05s ease;
+}
+
+.qty-btn:hover {
+    background-color: #e7dd5a;
+}
+
+.qty-btn:active {
+    transform: translateY(1px);
+}
+
+.qty-btn:focus-visible {
+    outline: 3px solid #ECB65F; /* Secondary Main */
+    outline-offset: 2px;
+}
+
+.qty-value {
+    min-width: 1.75rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.line-total {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-align: right;
+    min-width: 4.5rem;
+}
+
+/* Destructive affordance — Secondary Dark accent per the theme. */
+.line-remove {
+    color: #E89951; /* Secondary Dark / Accent */
+    background: none;
+    border: 1px solid #E89951;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.line-remove:hover {
+    background-color: #E89951;
+    color: #FDFCF7;
+}
+
+.line-remove:focus-visible {
+    outline: 3px solid #ECB65F; /* Secondary Main */
+    outline-offset: 2px;
+}
+
+/* ---- Footer / totals --------------------------------------------------- */
+.cart-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding: 1rem 1.2rem;
+    border-top: 2px solid #E2E8E0;
+}
+
+.cart-foot-count {
+    color: #5A625A; /* Text (Secondary) */
+    font-size: 0.95rem;
+}
+
+.cart-foot-total {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.6rem;
+}
+
+.cart-foot-total-label {
+    color: #5A625A;
+    font-weight: 600;
+}
+
+.cart-foot-total-value {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+/* ---- Responsive: stack each line so it reads on narrow screens --------- */
+@media (max-width: 40rem) {
+    .cart-line {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "info info"
+            "qty total"
+            "remove remove";
+        row-gap: 0.75rem;
+    }
+
+    .line-info { grid-area: info; }
+    .line-qty { grid-area: qty; }
+    .line-total { grid-area: total; text-align: right; }
+    .line-remove { grid-area: remove; justify-self: start; }
+}

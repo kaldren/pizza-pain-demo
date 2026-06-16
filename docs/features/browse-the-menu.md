@@ -1,6 +1,6 @@
 # Browsing the Menu
 
-As soon as you sign in, the home page shows you the full PAIN Pizza menu — every
+As soon as you open the app, the home page shows you the full PAIN Pizza menu — every
 pizza we offer, laid out as a grid of cards so you can take it all in at a glance.
 
 ## What you'll see

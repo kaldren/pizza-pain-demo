@@ -33,9 +33,14 @@ document, guideline, or instruction conflicts with this file, **this file wins**
   **user-facing** feature doc in [docs/](../../docs/) that explains what the feature does for the
   user (not how it is built). Match the tone of [docs/project.md](../../docs/project.md): brief,
   easy to understand, no implementation detail. This is separate from the spec in
-  [context/specs/](../specs/) (scope & acceptance, for builders) and from
-  [docs/development.md](../../docs/development.md) (the dev process).
-- **Security & data protection.** <!-- TODO: state your auth, secrets, and data-handling rules -->
+  [context/specs/](../specs/) (scope & acceptance, for builders).
+- **Security & data protection.** The app is **public by design** — no sign-in, accounts, or user
+  identity, and agents must never add authentication, login, or `[Authorize]` (see
+  [system_architecture.md](./system_architecture.md)). Collect **no personal data**: no PII, no
+  tracking, no profiles. Keep **secrets out of the repo** — no credentials, API keys, or connection
+  strings committed to source or `appsettings.json`; configuration supplies them at runtime. When
+  payment and persistence arrive (future specs), they inherit these rules: secrets via configuration,
+  only the data a feature needs, nothing logged that shouldn't be.
 
 ## 3. Definition of Done
 - [ ] Implements an approved spec from [context/specs/](../specs/)
@@ -45,7 +50,8 @@ document, guideline, or instruction conflicts with this file, **this file wins**
 - [ ] If frontend, follows the rules in [frontend.md](./frontend.md)
 - [ ] Has tests per [tests.md](./tests.md) — *unless the user explicitly waived tests for this feature (then say so in your output)*
 - [ ] Ships a short, user-facing feature doc in [docs/](../../docs/) explaining the feature (see §2)
-- [ ] <!-- TODO: add your own gates — e.g. passes linting, reviewed -->
+- [ ] Builds clean (`dotnet build pizza.slnx`) and all tests pass (`dotnet test`)
+- [ ] Adds no personal data and commits no secrets (see §2)
 
 ## 4. Amendments
 This document changes only by explicit user decision. Agents may *propose* amendments but must

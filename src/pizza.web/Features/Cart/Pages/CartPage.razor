@@ -1,0 +1,97 @@
+@page "/cart"
+@* Interactive Server so the remove / quantity buttons run their click handlers against the same
+   scoped CartState shared with the top-right indicator. Prerender is disabled so the page renders
+   once on the live circuit (mirrors Home.razor; spec cart-page §8). *@
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+@using pizza.web.Features.PizzaCatalog
+@using pizza.web.Features.Cart.Models
+@implements IDisposable
+@inject CartState Cart
+
+<PageTitle>Your Cart · Pizza Pain</PageTitle>
+
+<section class="cart-page">
+    <header class="cart-head">
+        <h1 class="cart-title">Your Cart</h1>
+        <a class="cart-back" href="/">← Back to menu</a>
+    </header>
+
+    @if (Cart.ItemCount == 0)
+    {
+        @* Empty state — a friendly prompt back to the menu, not an empty table (spec cart-page §6). *@
+        <div class="cart-empty" role="status">
+            <span class="cart-empty-emoji" aria-hidden="true">🛒</span>
+            <p class="cart-empty-text">Your cart is empty.</p>
+            <a class="cart-empty-cta" href="/">Browse the menu</a>
+        </div>
+    }
+    else
+    {
+        <ul class="cart-lines">
+            @foreach (var item in Cart.Items)
+            {
+                <li class="cart-line" @key="item.PizzaId">
+                    <div class="line-info">
+                        <span class="line-name">@item.Name</span>
+                        <span class="line-unit">@PriceFormatting.Format(item.UnitPrice, item.Currency) each</span>
+                    </div>
+
+                    <div class="line-qty" role="group" aria-label="@($"Quantity of {item.Name}")">
+                        <button type="button"
+                                class="qty-btn qty-dec"
+                                @onclick="() => Cart.Decrement(item.PizzaId)"
+                                aria-label="@DecrementLabel(item)">
+                            −
+                        </button>
+                        <span class="qty-value" aria-live="polite">@item.Quantity</span>
+                        <button type="button"
+                                class="qty-btn qty-inc"
+                                @onclick="() => Cart.Increment(item.PizzaId)"
+                                aria-label="@($"Increase quantity of {item.Name}")">
+                            +
+                        </button>
+                    </div>
+
+                    <span class="line-total">@PriceFormatting.Format(item.UnitPrice * item.Quantity, item.Currency)</span>
+
+                    <button type="button"
+                            class="line-remove"
+                            @onclick="() => Cart.Remove(item.PizzaId)"
+                            aria-label="@($"Remove {item.Name} from cart")">
+                        Remove
+                    </button>
+                </li>
+            }
+        </ul>
+
+        <footer class="cart-foot">
+            <span class="cart-foot-count">@ItemCountLabel</span>
+            <span class="cart-foot-total">
+                <span class="cart-foot-total-label">Total</span>
+                <span class="cart-foot-total-value">@PriceFormatting.Format(Cart.TotalPrice, Currency)</span>
+            </span>
+        </footer>
+    }
+</section>
+
+@code {
+    // Currency is uniform across the menu (same assumption as CartState.TotalPrice); take it from the
+    // first line for the footer total, falling back to an empty string for an empty cart.
+    private string Currency => Cart.Items.FirstOrDefault()?.Currency ?? string.Empty;
+
+    private string ItemCountLabel => Cart.ItemCount == 1 ? "1 item" : $"{Cart.ItemCount} items";
+
+    // On a quantity-1 line, decrementing removes the line (spec cart-page §5) — label it as removal so
+    // the destructive outcome is not surprising to assistive-tech users.
+    private static string DecrementLabel(CartItem item) => item.Quantity <= 1
+        ? $"Remove {item.Name} from cart"
+        : $"Decrease quantity of {item.Name}";
+
+    protected override void OnInitialized() => Cart.Changed += OnCartChanged;
+
+    // CartState raises Changed synchronously from the click handler's context; marshal back onto the
+    // renderer before re-rendering (mirrors CartIndicator).
+    private void OnCartChanged() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => Cart.Changed -= OnCartChanged;
+}

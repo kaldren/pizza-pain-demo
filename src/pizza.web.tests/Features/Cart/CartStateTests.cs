@@ -3,8 +3,9 @@ using pizza.web.Features.PizzaCatalog.Models;
 
 namespace pizza.web.tests.Features.Cart;
 
-// Covers the in-memory cart seam (spec add-to-cart §4.6–§4.8): adding pizzas, the live item count,
-// quantity increment for repeat adds, the total, and the Changed notification the indicator relies on.
+// Covers the in-memory cart seam (spec add-to-cart §4.6–§4.8, cart-page §4–§7): adding pizzas, the
+// live item count, quantity increment for repeat adds, the total, the Changed notification the
+// indicator relies on, and the cart-page remove / increment / decrement operations.
 public class CartStateTests
 {
     private static PizzaSummary Pizza(int id, string name, decimal price = 9.50m) => new(
@@ -89,5 +90,95 @@ public class CartStateTests
         cart.Add(Pizza(1, "Margherita"));
 
         Assert.Equal(1, raised);
+    }
+
+    [Fact]
+    public void Increment_RaisesQuantity_AndChanged()
+    {
+        var cart = new CartState();
+        cart.Add(Pizza(1, "Margherita"));
+        var raised = 0;
+        cart.Changed += () => raised++;
+
+        cart.Increment(1);
+
+        Assert.Equal(2, Assert.Single(cart.Items).Quantity);
+        Assert.Equal(2, cart.ItemCount);
+        Assert.Equal(1, raised);
+    }
+
+    [Fact]
+    public void Increment_UnknownPizza_IsNoOp_AndDoesNotRaiseChanged()
+    {
+        var cart = new CartState();
+        cart.Add(Pizza(1, "Margherita"));
+        var raised = 0;
+        cart.Changed += () => raised++;
+
+        cart.Increment(99);
+
+        Assert.Equal(1, cart.ItemCount);
+        Assert.Equal(0, raised);
+    }
+
+    [Fact]
+    public void Decrement_AboveOne_LowersQuantity_AndChanged()
+    {
+        var cart = new CartState();
+        cart.Add(Pizza(1, "Margherita"));
+        cart.Add(Pizza(1, "Margherita")); // quantity 2
+        var raised = 0;
+        cart.Changed += () => raised++;
+
+        cart.Decrement(1);
+
+        Assert.Equal(1, Assert.Single(cart.Items).Quantity);
+        Assert.Equal(1, raised);
+    }
+
+    [Fact]
+    public void Decrement_AtQuantityOne_RemovesLine_AndChanged()
+    {
+        var cart = new CartState();
+        cart.Add(Pizza(1, "Margherita")); // quantity 1
+        var raised = 0;
+        cart.Changed += () => raised++;
+
+        cart.Decrement(1);
+
+        Assert.Empty(cart.Items);
+        Assert.Equal(0, cart.ItemCount);
+        Assert.Equal(1, raised);
+    }
+
+    [Fact]
+    public void Remove_DeletesWholeLine_AndChanged()
+    {
+        var cart = new CartState();
+        cart.Add(Pizza(1, "Margherita"));
+        cart.Add(Pizza(1, "Margherita"));
+        cart.Add(Pizza(2, "Pepperoni"));
+        var raised = 0;
+        cart.Changed += () => raised++;
+
+        cart.Remove(1);
+
+        var remaining = Assert.Single(cart.Items);
+        Assert.Equal(2, remaining.PizzaId);
+        Assert.Equal(1, raised);
+    }
+
+    [Fact]
+    public void Remove_UnknownPizza_IsNoOp_AndDoesNotRaiseChanged()
+    {
+        var cart = new CartState();
+        cart.Add(Pizza(1, "Margherita"));
+        var raised = 0;
+        cart.Changed += () => raised++;
+
+        cart.Remove(99);
+
+        Assert.Equal(1, cart.ItemCount);
+        Assert.Equal(0, raised);
     }
 }

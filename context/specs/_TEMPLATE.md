@@ -1,54 +1,29 @@
 # Spec: <Feature Name>
 
-| Field | Value |
-|---|---|
-| **Spec name** | `<kebab-case-name>` (this file, without `.md`) |
-| **Status** | Draft &nbsp;\|&nbsp; **Approved** |
-| **Domain** | backend \| frontend \| both |
-| **Author** | <your name> |
-| **Date** | YYYY-MM-DD |
+`<kebab-case-name>` · **Status:** Draft → Approved · **Domain:** backend | frontend | both · <YYYY-MM-DD> · <author>
 
-> Implementation may begin only when **Status: Approved**.
+> Build only when **Approved**. Humans own and approve specs; agents may draft when asked. See [specs.md](../core/specs.md).
 
-## 1. Summary
-One short paragraph: what this feature is and why we're building it.
+## Summary
+One short paragraph: what we're building, who it's for, and why.
 
-## 2. Objectives
-**Objectives**
-- ...
+## Requirements
+Numbered and testable. Every box is the definition of done — including tests per [tests.md](../core/tests.md), unless the user waives them for this feature.
 
-## 3. User Stories
-- As a `<role>`, I want `<capability>`, so that `<benefit>`.
+1. [ ] ...
+2. [ ] ...
 
-## 4. Functional Requirements
-Numbered and testable.
-1. ...
-2. ...
+## Design
+Keep only the parts that apply; delete the rest.
 
-## 5. API / Contract  _(backend — delete if N/A)_
-- **Endpoint:** `METHOD /path`
-- **Request:** ...
-- **Response:** ... (shape + status codes)
-- **Errors:** ...
+- **API:** `METHOD /path` — request/response shape, status codes, errors.
+- **UI:** routes, components, states (loading / empty / error). Complies with [ui-theme.md](../core/ui-theme.md).
+- **Data:** entities/events touched; persistence & migrations.
 
-## 6. UI / UX  _(frontend — delete if N/A)_
-- **Pages / routes:** ...
-- **Components:** ...
-- **States:** loading / empty / error / success
-- Must comply with [ui-theme.md](../core/ui-theme.md).
+## Dependencies
+**None** — or name the package + justification. New dependencies need approval per [dependencies.md](../core/dependencies.md).
 
-## 7. Data & Domain
-- Entities / events touched or added: ...
-- Persistence impact (migrations, schema): ...
+## Open Questions
+Resolve before approval; delete the section once empty.
 
-## 8. Dependencies
-- New dependency required? **No** / **Yes →** name + justification.
-  Any new dependency must be approved per [dependencies.md](../core/dependencies.md) before use.
-
-## 9. Acceptance Criteria
-The implementation **and its tests** must satisfy every item.
-- [ ] ...
-- [ ] ...
-
-## 10. Open Questions (resolve before approval)
 1. ...

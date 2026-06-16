@@ -3,17 +3,15 @@ using Microsoft.AspNetCore.Http.HttpResults;
 namespace pizza.api.Features.PizzaCatalog.GetPizzaDetails;
 
 /// <summary>
-/// Maps <c>GET /pizzas/{pizza-id}</c>. The catalog is public, so this endpoint opts out of the
-/// API's default "authenticated user required" policy with <c>AllowAnonymous</c> (spec
-/// <c>get-pizza-details</c>, Q1).
+/// Maps <c>GET /pizzas/{pizza-id}</c>. The catalog is public — the app has no authentication
+/// (spec <c>get-pizza-details</c>).
 /// </summary>
 public static class GetPizzaDetailsEndpoint
 {
     public static IEndpointRouteBuilder MapGetPizzaDetails(this IEndpointRouteBuilder app)
     {
         app.MapGet("/pizzas/{pizzaId:int}", HandleRequest)
-            .WithName("GetPizzaDetails")
-            .AllowAnonymous();
+            .WithName("GetPizzaDetails");
 
         return app;
     }

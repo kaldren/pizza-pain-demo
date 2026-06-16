@@ -1,1 +1,1 @@
-Read `AGENTS.md` before implementing any features or making any decisions.
+@AGENTS.md

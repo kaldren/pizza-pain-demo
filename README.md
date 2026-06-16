@@ -1,51 +1,53 @@
 # PAIN Pizza
 
-PAIN Pizza is an online pizza-ordering application. Users can browse the menu, customize their
-order, pay securely, and track it in real time. It's built with **.NET 10** — an ASP.NET Core
-backend and a Blazor Web App frontend.
+An online pizza-ordering app — browse the menu, open a pizza for details and reviews, and build a
+cart. Open to everyone, **no sign-in**. Built with **.NET 10**: an ASP.NET Core Minimal API backend
+(`src/pizza.api`) and a Blazor Web App frontend (`src/pizza.web`).
 
-This repository is following the PAIN Methodology (Protected AI-Native Architecture) and is designed to be developed by a collaboration between human developers and AI agents. The codebase is organized around a spec-first workflow, where every feature starts as a spec that defines its goals, user flow, features, and success criteria. Agents then implement these specs in code, ensuring alignment with the product vision and consistency across the application.
+This repository is a **demo of spec-driven development**. It follows the **PAIN Methodology**
+(Protected AI-Native Architecture): humans and AI agents collaborate, but nothing is built ad-hoc.
+Every feature begins as a written, human-approved **spec** that defines its scope and acceptance
+criteria; agents then implement strictly against that spec. The result is work that stays aligned
+with intent and is reviewable by construction.
+
+## How it works
+
+1. **Write a spec.** Copy [context/specs/_TEMPLATE.md](context/specs/_TEMPLATE.md) to
+   `context/specs/<my-feature>.md`, fill in the Summary and a testable Requirements checklist, and set
+   `Status: Approved`. The Requirements list *is* the definition of done.
+2. **Hand it to an agent.** The `backend-developer` and `frontend-developer` agents enforce a **spec
+   gate** — they refuse to write code without an approved spec (see [AGENTS.md](AGENTS.md)).
+   ```
+   @backend-developer   implement spec: get-pizza-catalog     # C# / .NET API work
+   @frontend-developer  implement spec: home-pizza-catalog     # Blazor UI work
+   ```
+3. **Review against the spec.** A feature is "done" only when it meets its Requirements, has tests,
+   and ships a short user-facing doc in [docs/features/](docs/features/).
+
+The rules every feature obeys live in [context/core/](context/core/), with
+[constitution.md](context/core/constitution.md) as the supreme authority.
 
 ## Documentation
 
-- [docs/project.md](docs/project.md) — product overview: goals, user flow, features, and success criteria.
-- [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) — how development works: the spec-first workflow, agents, and the rules every feature follows.
+| Doc | What it covers |
+|---|---|
+| [docs/project.md](docs/project.md) | Product vision, goals, and what's built today vs. on the roadmap |
+| [AGENTS.md](AGENTS.md) | How development works: tech stack, context-load order, and the spec gate |
+| [context/core/](context/core/) | The rules: constitution, specs process, architecture, backend/frontend/tests/theme, dependencies |
+| [context/specs/](context/specs/) | One spec per feature — the definition of done |
+| [docs/features/](docs/features/) | Plain-language user guides for shipped features |
 
-## Quick start
+## Running the app
+
+The web app reads the API base URL from the `PizzaApi:BaseUrl` config key, so **start the API first**.
 
 ```
-# 1. Write a spec for your feature
-cp context/specs/_TEMPLATE.md context/specs/my-feature.md
-#    ...fill it in, set Status: Approved...
+# 1. API  — from src/pizza.api
+dotnet run --launch-profile https
 
-# 2. Hand it to an agent
-@backend-developer   implement spec: my-feature      # C# / .NET API work
-@frontend-developer  implement spec: my-feature      # Blazor UI work
+# 2. Web  — from src/pizza.web, then open https://localhost:7155
+dotnet run --launch-profile https
 ```
 
-See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for the full process.
-
-## Running the web app with Microsoft Entra ID sign-in
-
-The web app (`src/pizza.web`) authenticates users with Microsoft Entra ID (spec
-[`login-entra-id`](context/specs/login-entra-id.md)). Entra configuration is **never committed** —
-non-secret scaffolding lives in `appsettings.json` (`AzureAd:Instance`, `AzureAd:CallbackPath`) and
-the tenant/client/secret values come from [user-secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets).
-
-1. In the Entra app registration (**Authentication** blade), register these redirect URIs for the
-   `https` launch profile (port `7155`):
-   - Redirect URI (Web): `https://localhost:7155/signin-oidc`
-   - Front-channel logout URL: `https://localhost:7155/signout-callback-oidc`
-2. Create a client secret (**Certificates & secrets > New client secret**).
-3. Set the local secrets (run from `src/pizza.web`):
-   ```
-   dotnet user-secrets set "AzureAd:TenantId"     "<tenant-id>"
-   dotnet user-secrets set "AzureAd:ClientId"     "<client-id>"
-   dotnet user-secrets set "AzureAd:ClientSecret" "<client-secret>"
-   ```
-   With a client secret present, sign-in uses the OIDC **authorization code flow + PKCE**
-   (the recommended confidential-client flow). Without it, Microsoft.Identity.Web falls back to
-   the implicit `id_token` flow, which additionally requires *ID tokens* to be enabled in the
-   app registration.
-4. Run: `dotnet run --launch-profile https` (from `src/pizza.web`) and browse to
-   `https://localhost:7155`.
+Build everything with `dotnet build pizza.slnx`; run all tests with `dotnet test`.
+See [AGENTS.md](AGENTS.md) for the full workflow.

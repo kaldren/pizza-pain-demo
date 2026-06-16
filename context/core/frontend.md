@@ -10,54 +10,56 @@ We're using Blazor Web App for our frontend development, which allows us to buil
 - Ensure that all frontend features comply with the design specifications outlined in [ui-theme.md](./ui-theme.md) to maintain a cohesive and visually appealing user interface.
 
 # Code Structure
+The tree below shows what **exists today**; `(future)` entries illustrate where new work goes — the
+pattern to follow, not existing code. A feature owns its `Components/`, `Pages/`, `Services/`, and
+`Models/`; app-wide primitives live under `Shared/`.
+
 ```
 src/pizza.web/ (Blazor Web App)
 │
 ├── App.razor                         <-- Root host document
-├── Routes.razor                      <-- Router + AuthorizeRouteView
+├── Routes.razor                      <-- Router + RouteView
 ├── _Imports.razor                    <-- Project-wide @using directives (applies to all .razor)
 │
 ├── Features/
-│   ├── Authentication/                 <-- Sign in with Entra ID (spec: login-entra-id)
-│   │   ├── Components/                  <-- LoginDisplay, LoginLayout, RedirectToLogin
-│   │   └── Pages/                       <-- Login.razor (@page "/login")
+│   ├── PizzaCatalog/
+│   │   ├── Components/
+│   │   │   ├── PizzaCard.razor        <-- Individual pizza grid item ("Add to cart", "View details")
+│   │   │   └── ReviewList.razor       <-- Customer reviews on the details page
+│   │   ├── Pages/
+│   │   │   └── PizzaDetails.razor     <-- (@page "/pizza/{id:int}")
+│   │   ├── Services/
+│   │   │   ├── CatalogState.cs        <-- Fetches the catalog from GET /pizzas
+│   │   │   ├── PizzaDetailsState.cs   <-- Fetches one pizza from GET /pizzas/{id}
+│   │   │   └── IReviewsProvider.cs / MockReviewsProvider.cs  <-- Reviews seam (frontend mock)
+│   │   ├── Models/
+│   │   │   ├── PizzaSummary.cs        <-- Catalog/details DTO
+│   │   │   └── Review.cs              <-- Frontend-only review DTO
+│   │   └── PriceFormatting.cs         <-- Shared currency formatting helper
 │   │
-│   ├── PizzaOrderManagement/
-│   │   ├── Components/               <-- UI items exclusive to ordering
-│   │   │   └── OrderSummaryCard.razor
-│   │   ├── Pages/                    <-- Routable pages for ordering
-│   │   │   ├── Checkout.razor        <-- (@page "/checkout")
-│   │   │   └── OrderTracking.razor   <-- (@page "/order-status/{id}")
-│   │   └── Services/                 <-- Feature-scoped state/API clients
-│   │       └── OrderState.cs         <-- Handles local order state & API calls
-│   │
-│   └── PizzaCatalog/
-│       ├── Components/               <-- UI items exclusive to the catalog
-│       │   └── PizzaCard.razor       <-- Individual pizza grid item
+│   └── Cart/
+│       ├── Components/
+│       │   └── CartIndicator.razor    <-- Top-right cart badge in the app shell
 │       ├── Pages/
-│       │   └── PizzaDetails.razor    <-- (@page "/pizza/{id}")
-│       └── Services/
-│           └── CatalogState.cs       <-- Fetches featured pizzas from backend
+│       │   └── CartPage.razor         <-- (@page "/cart")
+│       ├── Services/
+│       │   └── CartState.cs           <-- Scoped in-memory cart (the cart seam)
+│       └── Models/
+│           └── CartItem.cs
+│   # (future) PizzaOrderManagement/ — Pages/Checkout.razor, Services/OrderState.cs, same shape
 │
 ├── Shared/                           <-- SYSTEM-GENERIC (App-wide primitives)
 │   ├── Layout/
-│   │   ├── MainLayout.razor          <-- App shell, sidebar, navbar
+│   │   ├── MainLayout.razor          <-- App shell (hosts the cart indicator)
 │   │   ├── NavMenu.razor
 │   │   └── ReconnectModal.razor      <-- Server-circuit reconnect UI
-│   ├── Pages/                        <-- App-level pages not owned by a feature
-│   │   ├── Home.razor                <-- Landing (@page "/")
-│   │   ├── Error.razor               <-- (@page "/Error")
-│   │   └── NotFound.razor            <-- (@page "/not-found")
-│   ├── Components/
-│   │   ├── LoadingSpinner.razor      <-- Pure UI wrapper components
-│   │   ├── CustomButton.razor        <-- Follows your ui-theme.md styles
-│   │   └── GridContainer.razor
-│   └── Models/
-│       └── SharedUiModels.cs         <-- Global UI-only models (e.g., Breadcrumbs)
+│   └── Pages/                        <-- App-level pages not owned by a feature
+│       ├── Home.razor                <-- Landing (@page "/"), renders the catalog grid
+│       ├── Error.razor               <-- (@page "/Error")
+│       └── NotFound.razor            <-- (@page "/not-found")
+│   # (future) Shared/Components/ (LoadingSpinner, etc.) · Shared/Models/ for app-wide UI models
 │
 └── Infrastructure/                   <-- Global Cross-Cutting Technical Concerns
-    ├── Authentication/                          <-- Auth wiring shared across features
-    │   └── LogInOrOutEndpointRouteBuilderExtensions.cs  <-- login/logout challenge endpoints
     └── Http/
         └── ApiClient.cs              <-- Centralized HttpClient wrapper configuration
 ```

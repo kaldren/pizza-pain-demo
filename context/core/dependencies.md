@@ -15,17 +15,9 @@
 - RabbitMQ (Message Broker) library for .NET 10
 - xUnit (Testing Framework) for .NET 10
 - FluentValidation (Validation Library) for .NET 10
-- Microsoft.Identity.Web (Authentication) for .NET 10 — Microsoft's first-party library for
-  Microsoft Entra ID (Azure AD). Used in `src/pizza.api` to validate Entra ID JWT bearer access
-  tokens (`AddMicrosoftIdentityWebApi`), enforcing issuer, audience, signature, lifetime and the
-  `API.ReadWrite` scope via the `AzureAd` configuration section (see spec `secure-api-entra-id`).
 
 ## Approved — Frontend Libraries and Frameworks
 - Blazor Web App for .NET 10 (Frontend Framework)
-- Microsoft.Identity.Web (Authentication) for .NET 10 — Microsoft's first-party library for
-  Microsoft Entra ID (Azure AD) authentication. Wraps OpenID Connect + cookie auth and is
-  configured via the `AzureAd` configuration section. Used in `src/pizza.web` to sign users in
-  with their Entra ID account (see spec `login-entra-id`).
 - bUnit (Frontend Testing Library) for .NET 10 — renders Blazor components in unit tests so we can
-  assert on markup and component behavior (e.g. `<AuthorizeView>` anonymous vs. authenticated
-  states). Used with xUnit in the `pizza.web` test project to test UI components.
+  assert on markup and component behavior. Used with xUnit in the `pizza.web` test project to test
+  UI components.

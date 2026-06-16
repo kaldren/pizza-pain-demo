@@ -9,7 +9,7 @@ using pizza.web.Shared.Pages;
 
 namespace pizza.web.tests.Features.PizzaCatalog;
 
-// Covers the home page catalog grid (spec home-pizza-catalog §9): a signed-in user sees one card per
+// Covers the home page catalog grid (spec home-pizza-catalog §9): a visitor sees one card per
 // pizza, an empty catalog shows the empty state, and a failed fetch shows the error state. The API is
 // stubbed via a fake HttpMessageHandler — no real network.
 public class CatalogPageTests : BunitContext

@@ -4,7 +4,7 @@ using pizza.web.Features.PizzaCatalog.Models;
 namespace pizza.web.Features.Cart.Services;
 
 /// <summary>
-/// Feature-scoped, in-memory shopping cart. Holds the pizzas a signed-in user has added and exposes
+/// Feature-scoped, in-memory shopping cart. Holds the pizzas the user has added and exposes
 /// the live item count and total, plus a <see cref="Changed"/> notification so the top-right cart
 /// indicator re-renders the moment an item is added (spec <c>add-to-cart</c>). Registered as
 /// <c>Scoped</c> so a single instance is shared across the catalog and the app-shell indicator within
@@ -45,5 +45,56 @@ public sealed class CartState
             : new CartItem(pizza.Id, pizza.Name, pizza.Price, pizza.Currency, Quantity: 1);
 
         Changed?.Invoke();
+    }
+
+    /// <summary>
+    /// Increase the quantity of an existing line by one. No-op if the pizza is not in the cart.
+    /// Used by the cart page's "+" control (spec <c>cart-page</c> §4). Notifies subscribers on change.
+    /// </summary>
+    public void Increment(int pizzaId)
+    {
+        if (!_items.TryGetValue(pizzaId, out var existing))
+        {
+            return;
+        }
+
+        _items[pizzaId] = existing with { Quantity = existing.Quantity + 1 };
+        Changed?.Invoke();
+    }
+
+    /// <summary>
+    /// Decrease the quantity of an existing line by one. When the line is already at quantity 1,
+    /// decrementing **removes the line entirely** (spec <c>cart-page</c> §5, resolved Open Question 1),
+    /// so quantity never drops to zero. No-op if the pizza is not in the cart. Notifies subscribers
+    /// on change.
+    /// </summary>
+    public void Decrement(int pizzaId)
+    {
+        if (!_items.TryGetValue(pizzaId, out var existing))
+        {
+            return;
+        }
+
+        if (existing.Quantity <= 1)
+        {
+            Remove(pizzaId);
+            return;
+        }
+
+        _items[pizzaId] = existing with { Quantity = existing.Quantity - 1 };
+        Changed?.Invoke();
+    }
+
+    /// <summary>
+    /// Remove a whole line from the cart regardless of its quantity. Used by the cart page's "Remove"
+    /// control (spec <c>cart-page</c> §3). No-op if the pizza is not in the cart. Notifies subscribers
+    /// when a line is actually removed.
+    /// </summary>
+    public void Remove(int pizzaId)
+    {
+        if (_items.Remove(pizzaId))
+        {
+            Changed?.Invoke();
+        }
     }
 }

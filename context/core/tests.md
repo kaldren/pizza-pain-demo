@@ -27,37 +27,43 @@ Everything below applies whenever tests are written.
 - Use the testing framework specified in the dependencies file [dependencies.md](./dependencies.md)
 - **Backend** tests use **xUnit**.
 - **Frontend** (Blazor) component tests use **bUnit** together with xUnit. Use bUnit to render
-  components and assert on their output and behavior — for example, rendering a component under a
-  test `AuthenticationStateProvider` to verify `<AuthorizeView>` anonymous vs. authenticated states.
-  Frontend tests live in the `pizza.web` test project, mirroring the feature/vertical-slice
-  structure of `src/pizza.web` (same convention as the backend test layout below).
+  components and assert on their output and behavior — for example, rendering a component with
+  seeded state to verify it shows the expected markup. Frontend tests live in the `pizza.web` test
+  project, mirroring the feature/vertical-slice structure of `src/pizza.web` (same convention as the
+  backend test layout below).
 
 
 # Code Structure for Tests
-```src/pizza.api.tests/
+Tests mirror the feature/vertical-slice layout of the project they cover. The trees below show what
+**exists today**; `(future)` entries illustrate where new tests go — the pattern to follow, not
+existing code.
+
+**Backend** — `src/pizza.api.tests/` mirrors `src/pizza.api/Features/`:
+```
 src/pizza.api.tests/
 │
-├── Features/
-│   ├── PizzaOrderManagement/
-│   │   ├── CreateOrder/
-│   │   │   ├── CreateOrderTests.cs      <-- Tests both happy and unhappy paths
-│   │   │   └── CreateOrderTestData.cs   <-- Component-specific test theory data
-│   │   │
-│   │   └── GetOrderDetails/
-│   │       └── GetOrderDetailsTests.cs
-│   │
-│   └── PizzaCatalog/
-│       ├── GetFeaturedPizzas/
-│       │   └── GetFeaturedPizzasTests.cs
-│       └── GetPizzaDetails/
-│           └── GetPizzaDetailsTests.cs
+└── Features/
+    └── PizzaCatalog/
+        ├── GetPizzaCatalog/
+        │   └── GetPizzaCatalogTests.cs   <-- Happy + empty-catalog paths, no DB/network
+        └── GetPizzaDetails/
+            └── GetPizzaDetailsTests.cs   <-- 200 + 404 paths, no DB/network
+    # (future) PizzaOrderManagement/CreateOrder/CreateOrderTests.cs — same mirroring
+    # (future) Infrastructure/ (WebApplicationFactory, Testcontainers) once EF Core lands
+```
+
+**Frontend** — `src/pizza.web.tests/` mirrors `src/pizza.web/Features/`; bUnit renders components:
+```
+src/pizza.web.tests/
 │
-├── Infrastructure/                      <-- Tests for global shared utilities
-│   ├── TestDatabaseFixture.cs           <-- Sets up PostgreSQL Respawn / Testcontainers
-│   ├── BaseIntegrationTest.cs           <-- Base class providing WebApplicationFactory
-│   └── MockDataGenerator.cs             <-- Global mock factories for Domain entities
-│
-└── Domain/                              <-- Optional: Pure unit tests for entities
-    ├── PizzaAggregateTests.cs           <-- Tests rich domain logic/rules on Pizza.cs
-    └── OrderAggregateTests.cs
+└── Features/
+    ├── PizzaCatalog/
+    │   ├── CatalogPageTests.cs           <-- Catalog grid: success / empty / error
+    │   ├── PizzaCardTests.cs
+    │   ├── PizzaDetailsPageTests.cs       <-- success / 404 / error / no-reviews
+    │   └── ReviewListTests.cs
+    └── Cart/
+        ├── CartStateTests.cs              <-- Add / increment / remove / quantity floor
+        ├── CartIndicatorTests.cs          <-- Empty at 0, count at N
+        └── CartPageTests.cs
 ```

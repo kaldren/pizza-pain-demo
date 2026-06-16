@@ -1,5 +1,4 @@
 @page "/"
-@attribute [Authorize]
 @* Interactive Server so the per-card "Add to cart" buttons run their click handlers. Prerendering is
    disabled to avoid fetching the catalog twice (once static, once on the circuit) and so the cards
    share the circuit's scoped CartState with the top-right indicator (spec add-to-cart §4.9, Q1/Q8). *@
@@ -49,7 +48,7 @@
 </section>
 
 @code {
-    // Fetch the catalog as the page initializes (runs during server-side rendering — no token needed
-    // since GET /pizzas is anonymous). A failed fetch is mapped to the error state inside CatalogState.
+    // Fetch the catalog as the page initializes (runs during server-side rendering). A failed fetch
+    // is mapped to the error state inside CatalogState.
     protected override Task OnInitializedAsync() => Catalog.LoadAsync();
 }

@@ -5,8 +5,8 @@ any agent writes code. This document defines how specs work and how agents must 
 
 ## Where specs live
 - All specs live in [context/specs/](../specs/), one file per feature.
-- Naming: kebab-case feature name, e.g. `context/specs/login-entra-id.md`.
-- The spec **name** is the file name without the `.md` extension (e.g. `login-entra-id`).
+- Naming: kebab-case feature name, e.g. `context/specs/home-pizza-catalog.md`.
+- The spec **name** is the file name without the `.md` extension (e.g. `home-pizza-catalog`).
 - Authoring template: [context/specs/_TEMPLATE.md](../specs/_TEMPLATE.md). Copy it to start a new spec.
 
 ## Who writes specs
@@ -31,11 +31,11 @@ any code, in this order:
    note in your output that the work was done **without a spec**.
 
 ## Implementing against a spec
-- Treat the spec's Acceptance Criteria as the definition of done for the feature.
+- Treat the spec's **Requirements** checklist as the definition of done for the feature.
 - If the spec is ambiguous or incomplete, ask the user rather than guessing.
 - If implementation reveals the spec is wrong, stop and propose a spec change — do not silently
   diverge from the approved spec.
-- Tests (per [tests.md](./tests.md)) must cover the spec's Acceptance Criteria — **unless the user
+- Tests (per [tests.md](./tests.md)) must cover the spec's Requirements — **unless the user
   explicitly waives tests for this feature**, per the waiver rules in [tests.md](./tests.md) and
   [constitution.md](./constitution.md). A waiver skips the tests, not the spec gate: an approved
   spec is still required.

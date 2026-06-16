@@ -41,4 +41,45 @@ We use **Inter** as our core functional typeface due to its exceptional legibili
 
 ### 2.1 Font Family
 ```css
+/* Headings */
 font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+/* Body / UI */
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+```
+
+### 2.2 Type Scale
+Use a single, predictable scale. Sizes are in `rem` (root = 16px) and pair with the weights below.
+
+| Token | Size | Weight | Usage |
+|---|---|---|---|
+| Display | 2.25rem | 700 (Bold) | Page hero / landing headline |
+| Heading 1 | 1.75rem | 700 (Bold) | Page title (e.g. a pizza name on its details page) |
+| Heading 2 | 1.375rem | 600 (SemiBold) | Section headers (e.g. "Reviews") |
+| Heading 3 | 1.125rem | 600 (SemiBold) | Card titles (e.g. a pizza name on a catalog card) |
+| Body | 1rem | 400 (Regular) | Default paragraph and UI text |
+| Small | 0.875rem | 400 (Regular) | Secondary text, captions, review dates |
+| Label | 0.875rem | 600 (SemiBold) | Buttons, badges, the cart indicator count |
+
+### 2.3 Rules
+- **Line height:** ~1.5 for body text, ~1.2 for headings.
+- **Color:** headings and body use **Text (Primary)** `#1A1D1A`; secondary/caption text uses
+  **Text (Secondary)** `#5A625A`. Never rely on color alone to convey meaning (see accessibility).
+- **Consistency over cleverness:** use the tokens above rather than introducing one-off sizes or
+  weights. New components reuse the scale.
+
+---
+
+## 3. Accessibility
+
+Every feature must remain usable by everyone — this is a non-negotiable from the
+[constitution](./constitution.md).
+
+- **Contrast:** text meets WCAG AA against its background (≥ 4.5:1 for body, ≥ 3:1 for large text).
+  The warm canvas (`#FDFCF7`) with `#1A1D1A` text satisfies this; verify any new pairing.
+- **Keyboard:** all interactive controls (buttons, links, the cart indicator, quantity +/−) are
+  focusable and operable by keyboard, with a visible focus state.
+- **Assistive tech:** images carry meaningful `alt` text (e.g. the pizza name); icon-only and
+  numeric controls carry an accessible label (e.g. `aria-label="Cart: 3 items"`,
+  `aria-label="4 out of 5 stars"`). Don't convey state through color or icon alone.
+- **Responsive:** layouts read well from mobile (single column) to desktop (multi-column grid)
+  without horizontal scrolling.

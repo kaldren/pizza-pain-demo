@@ -29,7 +29,7 @@ process in `context/core/specs.md` exactly:
 1. **Spec name provided in the prompt** → read `context/specs/<name>.md`.
    - Missing file → stop; tell the user and offer to help draft it from `_TEMPLATE.md`. Do not implement.
    - Not `Status: Approved` → stop; ask the user to approve it first.
-   - Approved → implement strictly against it; its Acceptance Criteria are your definition of done.
+   - Approved → implement strictly against it; its Requirements checklist is your definition of done.
 2. **No spec name provided** → stop and ask the user for a spec name.
 3. **User declines a spec** → warn clearly that building without a spec is **extremely dangerous
    and bad practice**, then ask for explicit confirmation to "YOLO it". Proceed only on explicit
