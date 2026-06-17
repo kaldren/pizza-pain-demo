@@ -1,0 +1,33 @@
+name: CI
+
+# Enforces the constitution's Definition of Done: "Builds clean (dotnet build pizza.slnx)
+# and all tests pass (dotnet test)" on every push and pull request.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build & test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore pizza.slnx
+
+      - name: Build
+        run: dotnet build pizza.slnx --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test pizza.slnx --configuration Release --no-build --verbosity normal

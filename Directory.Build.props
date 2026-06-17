@@ -1,0 +1,14 @@
+<Project>
+
+  <!--
+    Solution-wide build settings. Every project in the PAIN Pizza solution targets .NET 10 with
+    Nullable + ImplicitUsings enabled (AGENTS.md "Tech Stack"). Centralising them here keeps the
+    individual .csproj files free of repetition; project-specific settings stay in each .csproj.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>

@@ -13,15 +13,15 @@ also introduces the **first frontend → backend HTTP integration** (a typed `Ap
 base-URL config), which the app lacks today.
 
 ## Requirements
-1. [ ] `/` shows a grid of `PizzaCard`s — one per pizza from `GET /pizzas` — each with image, name, description, and price formatted with currency (e.g. `£9.50`).
-2. [ ] `/` is publicly accessible — no sign-in required.
-3. [ ] The page fetches via a `CatalogState` service using the shared `ApiClient`; the API base URL comes from configuration, not a hard-coded literal.
-4. [ ] **Loading:** a loading indicator while the request is in flight (not a blank screen). **Empty (`[]`):** a friendly "No pizzas available" message. **Error:** a themed error message that does not crash the circuit. All visibly distinct.
-5. [ ] The grid is responsive — multiple columns on desktop, one on mobile — per [ui-theme.md](../core/ui-theme.md) spacing/breakpoints.
-6. [ ] Each card has a button linking to `/pizza/{id}` (the details page itself is a separate slice).
-7. [ ] The slice follows [frontend.md](../core/frontend.md): `Features/PizzaCatalog/Components/PizzaCard.razor`, `Features/PizzaCatalog/Services/CatalogState.cs`, and `Infrastructure/Http/ApiClient.cs`.
-8. [ ] UI complies with [ui-theme.md](../core/ui-theme.md); cards are keyboard-focusable and images have meaningful `alt` text (pizza name).
-9. [ ] bUnit tests (mirroring the slice, per [tests.md](../core/tests.md)) cover success (N cards), empty, and error states using a stubbed `ApiClient`, no real network.
+1. [x] `/` shows a grid of `PizzaCard`s — one per pizza from `GET /pizzas` — each with image, name, description, and price formatted with currency (e.g. `£9.50`).
+2. [x] `/` is publicly accessible — no sign-in required.
+3. [x] The page fetches via a `CatalogState` service using the shared `ApiClient`; the API base URL comes from configuration, not a hard-coded literal.
+4. [x] **Loading:** a loading indicator while the request is in flight (not a blank screen). **Empty (`[]`):** a friendly "No pizzas available" message. **Error:** a themed error message that does not crash the circuit. All visibly distinct.
+5. [x] The grid is responsive — multiple columns on desktop, one on mobile — per [ui-theme.md](../core/ui-theme.md) spacing/breakpoints.
+6. [x] Each card has a button linking to `/pizza/{id}` (the details page itself is a separate slice).
+7. [x] The slice follows [frontend.md](../core/frontend.md): `Features/PizzaCatalog/Components/PizzaCard.razor`, `Features/PizzaCatalog/Services/CatalogState.cs`, and `Infrastructure/Http/ApiClient.cs`.
+8. [x] UI complies with [ui-theme.md](../core/ui-theme.md); cards are keyboard-focusable and images have meaningful `alt` text (pizza name).
+9. [x] bUnit tests (mirroring the slice, per [tests.md](../core/tests.md)) cover success (N cards), empty, and error states using a stubbed `ApiClient`, no real network.
 
 ## Design
 - **API (consumed):** `GET /pizzas` from `src/pizza.api` — `200 OK` + JSON array (camelCase); `[]` is

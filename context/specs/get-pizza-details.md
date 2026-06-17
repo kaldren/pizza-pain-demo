@@ -12,17 +12,17 @@ in-memory mock — no database, no EF Core, no migrations**; persistence is a la
 data source behind the handler without changing the API surface.
 
 ## Requirements
-1. [ ] `GET /pizzas/{pizza-id}` is a minimal-API endpoint registered from a `GetPizzaDetailsEndpoint`
+1. [x] `GET /pizzas/{pizza-id}` is a minimal-API endpoint registered from a `GetPizzaDetailsEndpoint`
    in `Features/PizzaCatalog/GetPizzaDetails/`, mapped from `Program.cs` via an extension method per [backend.md](../core/backend.md).
-2. [ ] It delegates to a `GetPizzaDetailsHandler` resolving the pizza from the **in-memory mock** — no `DbContext`, EF Core, network, or file I/O.
-3. [ ] Existing id → **200** with the pizza body (shape below); unknown id → **404** (empty, via `Results.NotFound()`).
-4. [ ] A non-bindable `{pizza-id}` (non-numeric for an `int`) returns **400** / does not match the route (framework default, no custom validation).
-5. [ ] The endpoint is **public** — the catalog is open and the app has no authentication.
-6. [ ] The mock holds a small fixed catalog (**≥3** distinct pizzas) defined in one place so tests and the handler share one source of truth.
-7. [ ] Response is JSON with the API's default camelCase serialization (no new config).
-8. [ ] The slice follows [backend.md](../core/backend.md):
+2. [x] It delegates to a `GetPizzaDetailsHandler` resolving the pizza from the **in-memory mock** — no `DbContext`, EF Core, network, or file I/O.
+3. [x] Existing id → **200** with the pizza body (shape below); unknown id → **404** (empty, via `Results.NotFound()`).
+4. [x] A non-bindable `{pizza-id}` (non-numeric for an `int`) returns **400** / does not match the route (framework default, no custom validation).
+5. [x] The endpoint is **public** — the catalog is open and the app has no authentication.
+6. [x] The mock holds a small fixed catalog (**≥3** distinct pizzas) defined in one place so tests and the handler share one source of truth.
+7. [x] Response is JSON with the API's default camelCase serialization (no new config).
+8. [x] The slice follows [backend.md](../core/backend.md):
    `Features/PizzaCatalog/GetPizzaDetails/{GetPizzaDetailsEndpoint,GetPizzaDetailsHandler,GetPizzaDetailsModels}.cs` + `Domain/Entities/Pizza.cs`.
-9. [ ] Tests in `src/pizza.api.tests/Features/PizzaCatalog/GetPizzaDetails/GetPizzaDetailsTests.cs` cover the 200 and 404 paths, no DB/network, per [tests.md](../core/tests.md).
+9. [x] Tests in `src/pizza.api.tests/Features/PizzaCatalog/GetPizzaDetails/GetPizzaDetailsTests.cs` cover the 200 and 404 paths, no DB/network, per [tests.md](../core/tests.md).
 
 ## Design
 - **API:** `GET /pizzas/{pizza-id}` (`pizza-id` is `int`), no request body. `200 OK` returns:

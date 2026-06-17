@@ -12,17 +12,17 @@ reuses the **same `InMemoryPizzaCatalog` mock** that backs pizza details, so bot
 source of truth. No database, no EF Core, no migrations.
 
 ## Requirements
-1. [ ] `GET /pizzas` is a minimal-API endpoint registered from a `GetPizzaCatalogEndpoint` in
+1. [x] `GET /pizzas` is a minimal-API endpoint registered from a `GetPizzaCatalogEndpoint` in
    `Features/PizzaCatalog/GetPizzaCatalog/`, mapped from `Program.cs` via an extension method per [backend.md](../core/backend.md).
-2. [ ] It delegates to a `GetPizzaCatalogHandler` resolving all pizzas from the **existing in-memory mock** (`IPizzaCatalog` / `InMemoryPizzaCatalog`) — no `DbContext`, EF Core, network, or file I/O.
-3. [ ] Returns **200** with a JSON array of pizzas in natural order; each item has the **same shape** as the pizza-details body.
-4. [ ] An empty catalog returns **200** with `[]` — **not** a 404.
-5. [ ] The array length and contents match the mock exactly (no duplicated/divergent data).
-6. [ ] The endpoint is **public** — the app has no authentication — matching `GET /pizzas/{id}`.
-7. [ ] Response is JSON with the API's default camelCase serialization (no new config).
-8. [ ] The slice follows [backend.md](../core/backend.md):
+2. [x] It delegates to a `GetPizzaCatalogHandler` resolving all pizzas from the **existing in-memory mock** (`IPizzaCatalog` / `InMemoryPizzaCatalog`) — no `DbContext`, EF Core, network, or file I/O.
+3. [x] Returns **200** with a JSON array of pizzas in natural order; each item has the **same shape** as the pizza-details body.
+4. [x] An empty catalog returns **200** with `[]` — **not** a 404.
+5. [x] The array length and contents match the mock exactly (no duplicated/divergent data).
+6. [x] The endpoint is **public** — the app has no authentication — matching `GET /pizzas/{id}`.
+7. [x] Response is JSON with the API's default camelCase serialization (no new config).
+8. [x] The slice follows [backend.md](../core/backend.md):
    `Features/PizzaCatalog/GetPizzaCatalog/{GetPizzaCatalogEndpoint,GetPizzaCatalogHandler,GetPizzaCatalogModels}.cs`.
-9. [ ] Tests in `src/pizza.api.tests/Features/PizzaCatalog/GetPizzaCatalog/GetPizzaCatalogTests.cs` cover the populated-catalog path, no DB/network, per [tests.md](../core/tests.md).
+9. [x] Tests in `src/pizza.api.tests/Features/PizzaCatalog/GetPizzaCatalog/GetPizzaCatalogTests.cs` cover the populated-catalog path, no DB/network, per [tests.md](../core/tests.md).
 
 ## Design
 - **API:** `GET /pizzas`, no body, no query params (no paging/filtering in v1). `200 OK` returns a
