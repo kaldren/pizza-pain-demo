@@ -51,3 +51,6 @@ dotnet run --launch-profile https
 
 Build everything with `dotnet build pizza.slnx`; run all tests with `dotnet test`.
 See [AGENTS.md](AGENTS.md) for the full workflow.
+
+The API exposes a public `GET /health` liveness probe (returns `{ "status": "ok" }`) so you can
+confirm it is up before starting the web app.
