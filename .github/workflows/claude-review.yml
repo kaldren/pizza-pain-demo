@@ -1,0 +1,46 @@
+name: Claude PR Review
+
+# PAIN methodology: every PR is reviewed FIRST by the agent (this workflow, automatically on open)
+# and THEN by a human (enforced via branch protection on main). The agent reviews against the
+# approved spec and the core rule docs, not just generic code quality.
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  claude-review:
+    name: Spec-gate review
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Claude review
+        uses: anthropics/claude-code-action@v1
+        with:
+          api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            You are the PAIN methodology spec-gate reviewer. Review this pull request and
+            post your findings as a GitHub PR review. Request changes if any BLOCKING issue exists.
+
+            1. Read context/core/constitution.md (supreme authority) and the relevant rule docs in
+               context/core/ (backend.md / frontend.md / tests.md / ui-theme.md / dependencies.md /
+               system_architecture.md).
+            2. Identify which spec in context/specs/ this PR implements. If no Approved spec covers
+               the change, flag it as BLOCKING — spec-first is mandatory; agents/PRs must not add
+               features without an approved spec.
+            3. Check the diff against that spec's Requirements checklist. Call out every requirement
+               not met, and any scope built beyond the spec.
+            4. Verify the constitution's Definition of Done: only approved dependencies
+               (context/core/dependencies.md), NO authentication/login/[Authorize] added, NO secrets
+               committed, tests present per tests.md, a user-facing docs/features/ doc shipped, and
+               the work follows the vertical-slice structure.
+            5. Keep findings concise and actionable; reference file paths and the specific spec
+               requirement numbers. Distinguish BLOCKING issues from suggestions.
