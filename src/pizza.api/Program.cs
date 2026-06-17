@@ -24,11 +24,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Liveness probe — lets local dev and CI/containers confirm the API is up before the web app
-// (which depends on it) starts. Public, like the rest of the app; no auth.
-app.MapGet("/health", () => Results.Ok(new { status = "ok" }))
-    .WithName("HealthCheck");
-
 // PizzaCatalog endpoints.
 app.MapGetPizzaCatalog();
 app.MapGetPizzaDetails();
