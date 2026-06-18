@@ -27,6 +27,20 @@ with intent and is reviewable by construction.
 The rules every feature obeys live in [context/core/](context/core/), with
 [constitution.md](context/core/constitution.md) as the supreme authority.
 
+## Protecting the constitution
+
+Because [constitution.md](context/core/constitution.md) is the supreme authority, it is **human-only**
+— it must be edited manually by a person, never by an AI agent. This is enforced by a Claude Code
+`PreToolUse` hook so it can't be bypassed by accident:
+
+- [.claude/hooks/protect-constitution.ps1](.claude/hooks/protect-constitution.ps1) inspects every
+  `Edit`/`Write`/`NotebookEdit` and denies any that target `context/core/constitution.md`.
+- [.claude/settings.json](.claude/settings.json) wires the script in as a project-wide hook (committed,
+  so it applies for everyone on the team).
+
+A human editing the file directly in their editor is unaffected — that's the intended escape hatch.
+Review or toggle the hook anytime with `/hooks`.
+
 ## Documentation
 
 | Doc | What it covers |
